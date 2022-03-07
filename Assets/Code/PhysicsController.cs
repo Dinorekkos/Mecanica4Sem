@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class PhysicsController : MonoBehaviour
 {
+
+    Transform ground;
     private float MyAcceleration;
     // gravity 9.81
     private float MyGravity = 9.81f;
+    Vector3 groundPos;
+
+    public Vector3 GroundPosition
+    {
+        get {return groundPos;}
+    }
+
     void Start()
     {
-        
+        ground = GameObject.FindGameObjectWithTag("Ground").transform;
+        Debug.Log(ground.name);
     }
     
     void Update()
@@ -22,11 +32,23 @@ public class PhysicsController : MonoBehaviour
         MyGravity = _gravity;
     }
 
-    public void ApplyGravityToObject(GameObject myGameObject)
+    public void ApplyGravityToObject(Vector3 vector, GameObject gameObject, GameObject groundCheck)
     {
-        Vector3 direction = Vector3.zero;
-        direction.y = -MyGravity * Time.deltaTime;
-        myGameObject.transform.position = new Vector3(0, direction.y, 0);
+        Vector3 _gravityDirection = Vector3.zero;
+        _gravityDirection.y = -MyGravity * Time.deltaTime;
+        vector = new Vector3 (0,_gravityDirection.y,0);
+        
+        if(groundCheck.transform.position.y <= groundPos.y)
+        {
+            groundPos.y = groundPos.y + 1;
+            groundCheck.transform.position = groundPos;
+        }
+        else
+        {
+            gameObject.transform.position += vector;
+        }
+        
+        
     }
 
     public void ApplyAcceleration()
