@@ -50,21 +50,22 @@ public class PhysicsController : MonoBehaviour
         
     }
 
-    public float ApplyAccelerationToObject(Vector3 myVector3, float velocity, float maxHeigh)
+    public Vector3 ApplyAccelerationToObject(Vector3 myVector3, float velocity, float maxHeigh)
     {
+        
         Vector3 _acelerationDir = Vector3.zero;
-
-        _acelerationDir.y = velocity * Time.deltaTime;
-
-        myVector3 = new Vector3(0, _acelerationDir.y, 0);
-
+        
         if (_acelerationDir.y >= maxHeigh)
         {
             _acelerationDir.y = 0;
         }
+
+        _acelerationDir.y += velocity * Time.deltaTime;
+
+        myVector3 = new Vector3(0, _acelerationDir.y, 0);
         
-        
-        return myVector3.y;
+        // Debug.Log(myVector3);
+        return myVector3;
 
 
         // Vector3 velocityDir = Vector3.zero;
@@ -86,4 +87,5 @@ public class PhysicsController : MonoBehaviour
         // return myVector3;
 
     }
+    
 }

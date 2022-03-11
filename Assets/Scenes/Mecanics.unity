@@ -248,7 +248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332765627}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.27, z: 0}
+  m_LocalPosition: {x: 0, y: 6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2049052728}
@@ -269,11 +269,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyGravity: 5
   velocityMovement: 10
-  velocityJump: 100
-  maxHighJump: 0.01
+  velocityJump: 200
+  maxHighJump: 5
+  isGrounded: 0
   resetPlayer: 0
   myGroundCheck: {fileID: 2049052727}
-  isGrounded: 0
 --- !u!114 &332765633
 MonoBehaviour:
   m_ObjectHideFlags: 0
