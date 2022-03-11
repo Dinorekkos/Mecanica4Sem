@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
                     // AYUDAAAA NO SE POR QUE NO LO HACE CONSTANTE ESTOY HARTA AHHHHHHHHHHHHHHHHHHHHH
                     // myTransform.Translate(MyphysicsController.ApplyAccelerationToObject(myTransform.position, velocityJump, maxHighJump));
                     myTransform.Translate(MyphysicsController.ApplyAccelerationToObject(myTransform.position, velocityJump, maxHighJump));
-                    Debug.Log(myVector3);
+                    // Debug.Log(myVector3);
                 }
                 
             }
