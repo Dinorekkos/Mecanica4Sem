@@ -62,7 +62,7 @@
       <workItem from="1646881337815" duration="5103000" />
       <workItem from="1646886526908" duration="4181000" />
       <workItem from="1646890881979" duration="1087000" />
-      <workItem from="1646948764967" duration="12261000" />
+      <workItem from="1646948764967" duration="13760000" />
     </task>
     <servers />
   </component>
@@ -76,13 +76,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Code/PlayerController.cs</url>
-          <line>134</line>
+          <line>135</line>
           <properties documentPath="D:\Proyectos\Unity Projects\Universidad\4 Semestre\Mecanica\Mecanica4\Assets\Code\PlayerController.cs" initialLine="134" containingFunctionPresentation="method 'MovePlayer'">
             <startOffsets>
-              <option value="3561" />
+              <option value="3649" />
             </startOffsets>
             <endOffsets>
-              <option value="3652" />
+              <option value="3781" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />

@@ -267,8 +267,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0f84ad4e696fb42aa5fc8c802c7c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyGravity: 9.81
-  velocity: 5
+  MyGravity: 5
+  velocityMovement: 10
+  velocityJump: 100
   maxHighJump: 0.01
   resetPlayer: 0
   myGroundCheck: {fileID: 2049052727}

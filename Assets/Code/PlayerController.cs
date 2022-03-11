@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     [Header("Physics")] 
     [SerializeField] private float MyGravity = 9.81f;
     
-    [Header("Player")] [SerializeField] private float velocity = 1;
+    [Header("Player")] [SerializeField] private float velocityMovement = 1;
+    [SerializeField] private float velocityJump = 1;
     [SerializeField] private float maxHighJump = 5;
     [SerializeField] private bool resetPlayer;
 
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     canJump = false;
-                    MyphysicsController.ApplyGravityToObject(movement, this.gameObject, myGroundCheck, isGrounded);
+                    MyphysicsController.ApplyGravityToObject(movement, this.gameObject, isGrounded);
                 }
                 
                 MovePlayer();
@@ -106,34 +107,34 @@ public class PlayerController : MonoBehaviour
             if (keyboard.sKey.isPressed)
             {
                 // Debug.Log("MOVE DOWN");
-                myTransform.Translate( -Vector3.forward * Time.deltaTime * velocity);
+                myTransform.Translate( -Vector3.forward * Time.deltaTime * velocityMovement);
             }
 
             if (keyboard.aKey.isPressed)
             {
                 // Debug.Log("MOVE A");
-                myTransform.Translate(  -Vector3.right* Time.deltaTime * velocity);
+                myTransform.Translate(  -Vector3.right* Time.deltaTime * velocityMovement);
             }
 
             if (keyboard.dKey.isPressed)
             {
                 // Debug.Log("MOVE D");
-                myTransform.Translate(  Vector3.right* Time.deltaTime * velocity);
+                myTransform.Translate(  Vector3.right* Time.deltaTime * velocityMovement);
             }
 
             if (keyboard.wKey.isPressed)
             {
                 // Debug.Log("MOVE W");
-                myTransform.Translate( Vector3.forward * Time.deltaTime * velocity);
+                myTransform.Translate( Vector3.forward * Time.deltaTime * velocityMovement);
             }
 
-            if (keyboard.spaceKey.isPressed)
+            if (keyboard.spaceKey.wasPressedThisFrame)
             {
                 // Debug.Log("Space key pressed");
                 if (canJump)
                 {
-                    myTransform.Translate(MyphysicsController.ApplyAccelerationToObject(myTransform.position));
-                    // Debug.Log(myTransform.position);
+                    myTransform.Translate( Vector3.up * MyphysicsController.ApplyAccelerationToObject(myTransform.position, velocityJump, maxHighJump));
+                    Debug.Log(movement);
                 }
                 
             }

@@ -5,20 +5,21 @@ using UnityEngine;
 public class PhysicsController : MonoBehaviour
 {
     Transform ground;
-    private float MyAcceleration;
+
+    private Vector3 MyAcceleration;
     // gravity 9.81
     private float MyGravity = 9.81f;
     Vector3 groundPos;
     
-    public Vector3 GroundPosition
-    {
-        get {return groundPos;}
-    }
+    // public Vector3 GroundPosition
+    // {
+    //     get {return groundPos;}
+    // }
 
     void Start()
     {
-        ground = GameObject.FindGameObjectWithTag("Ground").transform;
-        Debug.Log(ground.name);
+        // ground = GameObject.FindGameObjectWithTag("Ground").transform;
+        // Debug.Log(ground.name);
     }
     
     void Update()
@@ -31,48 +32,58 @@ public class PhysicsController : MonoBehaviour
         MyGravity = _gravity;
     }
 
-    public void ApplyGravityToObject(Vector3 vector, GameObject gameObject, GameObject groundCheck, bool isGrounded)
+    public void ApplyGravityToObject(Vector3 vector, GameObject gameObject, bool isGrounded)
     {
         
+        Vector3 _gravityDirection = Vector3.zero;
+        _gravityDirection.y -= MyGravity * Time.deltaTime;
+        vector = new Vector3 (0,_gravityDirection.y,0);
+        
+        if(isGrounded)
+        { 
+        }
+        else
+        {
+            gameObject.transform.position += vector;
+        }
         
         
-        // Vector3 _gravityDirection = Vector3.zero;
-        // _gravityDirection.y -= MyGravity * Time.deltaTime;
-        // vector = new Vector3 (0,_gravityDirection.y,0);
-        //
-        // if(isGrounded)
-        // { 
-        // }
-        // else
-        // {
-        //     gameObject.transform.position += vector;
-        // }
-        //
-        //
     }
 
-    public Vector3 ApplyAccelerationToObject(Vector3 myVector3)
+    public float ApplyAccelerationToObject(Vector3 myVector3, float velocity, float maxHeigh)
     {
-        float offsetY;
+        Vector3 _acelerationDir = Vector3.zero;
+
+        _acelerationDir.y = velocity * Time.deltaTime;
+
+        myVector3 = new Vector3(0, _acelerationDir.y, 0);
+
+        if (_acelerationDir.y >= maxHeigh)
+        {
+            _acelerationDir.y = 0;
+        }
         
-        Vector3 velocityDir = Vector3.zero;
-        Vector3 acceleration = Vector3.zero;
         
-        acceleration.y = 500;
-        velocityDir.y += acceleration.y;
-        
-        // offsetY = velocityDir.y - acceleration.y;
+        return myVector3.y;
+
+
+        // Vector3 velocityDir = Vector3.zero;
+        // Vector3 acceleration = Vector3.zero;
+        //
+        // acceleration.y = 500;
+        // velocityDir.y += acceleration.y;
+        //
         //
         // if (velocityDir.y >= 5)
         // {
-        //     
+        //     velocityDir.y = 0;
         // }
-        
-        myVector3.y = velocityDir.y * Time.deltaTime; 
-        
-        // Debug.Log(offsetY);
-
-        return myVector3;
+        //
+        // myVector3.y = velocityDir.y * Time.deltaTime; 
+        //
+        // // Debug.Log(offsetY);
+        //
+        // return myVector3;
 
     }
 }
