@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PhysicsController : MonoBehaviour
 {
-
     Transform ground;
     private float MyAcceleration;
     // gravity 9.81
     private float MyGravity = 9.81f;
     Vector3 groundPos;
-
+    
     public Vector3 GroundPosition
     {
         get {return groundPos;}
@@ -32,27 +31,48 @@ public class PhysicsController : MonoBehaviour
         MyGravity = _gravity;
     }
 
-    public void ApplyGravityToObject(Vector3 vector, GameObject gameObject, GameObject groundCheck)
+    public void ApplyGravityToObject(Vector3 vector, GameObject gameObject, GameObject groundCheck, bool isGrounded)
     {
-        Vector3 _gravityDirection = Vector3.zero;
-        _gravityDirection.y = -MyGravity * Time.deltaTime;
-        vector = new Vector3 (0,_gravityDirection.y,0);
-        
-        if(groundCheck.transform.position.y <= groundPos.y)
-        {
-            groundPos.y = groundPos.y + 1;
-            groundCheck.transform.position = groundPos;
-        }
-        else
-        {
-            gameObject.transform.position += vector;
-        }
         
         
+        
+        // Vector3 _gravityDirection = Vector3.zero;
+        // _gravityDirection.y -= MyGravity * Time.deltaTime;
+        // vector = new Vector3 (0,_gravityDirection.y,0);
+        //
+        // if(isGrounded)
+        // { 
+        // }
+        // else
+        // {
+        //     gameObject.transform.position += vector;
+        // }
+        //
+        //
     }
 
-    public void ApplyAcceleration()
+    public Vector3 ApplyAccelerationToObject(Vector3 myVector3)
     {
+        float offsetY;
         
+        Vector3 velocityDir = Vector3.zero;
+        Vector3 acceleration = Vector3.zero;
+        
+        acceleration.y = 500;
+        velocityDir.y += acceleration.y;
+        
+        // offsetY = velocityDir.y - acceleration.y;
+        //
+        // if (velocityDir.y >= 5)
+        // {
+        //     
+        // }
+        
+        myVector3.y = velocityDir.y * Time.deltaTime; 
+        
+        // Debug.Log(offsetY);
+
+        return myVector3;
+
     }
 }
