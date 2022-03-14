@@ -11,10 +11,7 @@ public class PhysicsController : MonoBehaviour
     private float MyGravity = 9.81f;
     Vector3 groundPos;
     
-    // public Vector3 GroundPosition
-    // {
-    //     get {return groundPos;}
-    // }
+    float speedVelocity;
 
     void Start()
     {
@@ -27,65 +24,39 @@ public class PhysicsController : MonoBehaviour
         
     }
 
-    public PhysicsController(float _gravity)
+    public PhysicsController(float _gravity, float _speedVelocity)
     {
         MyGravity = _gravity;
+        speedVelocity = _speedVelocity;
     }
 
-    public void ApplyGravityToObject(Vector3 vector, GameObject gameObject, bool isGrounded)
+    public float ApplyGravityToObject (Vector3 myVector, GameObject gameObject, bool isGrounded)
     {
-        
-        Vector3 _gravityDirection = Vector3.zero;
-        _gravityDirection.y -= MyGravity * Time.deltaTime;
-        vector = new Vector3 (0,_gravityDirection.y,0);
-        
+
+
         if(isGrounded)
-        { 
-        }
-        else
         {
-            gameObject.transform.position += vector;
+            speedVelocity += (MyGravity * Time.deltaTime);
         }
         
+        // Vector3 _gravityDirection = Vector3.zero;
+        // _gravityDirection.y -= MyGravity * Time.deltaTime;
+        // myVector = new Vector3 (0,_gravityDirection.y,0);
         
-    }
-
-    public Vector3 ApplyAccelerationToObject(Vector3 myVector3, float velocity, float maxHeigh)
-    {
-        
-        Vector3 _acelerationDir = Vector3.zero;
-        
-        if (_acelerationDir.y >= maxHeigh)
-        {
-            _acelerationDir.y = 0;
-        }
-
-        _acelerationDir.y += velocity * Time.deltaTime;
-
-        myVector3 = new Vector3(0, _acelerationDir.y, 0);
-        
-        // Debug.Log(myVector3);
-        return myVector3;
-
-
-        // Vector3 velocityDir = Vector3.zero;
-        // Vector3 acceleration = Vector3.zero;
-        //
-        // acceleration.y = 500;
-        // velocityDir.y += acceleration.y;
-        //
-        //
-        // if (velocityDir.y >= 5)
-        // {
-        //     velocityDir.y = 0;
+        // if(isGrounded)
+        // { 
         // }
-        //
-        // myVector3.y = velocityDir.y * Time.deltaTime; 
-        //
-        // // Debug.Log(offsetY);
-        //
-        // return myVector3;
-
+        // else
+        // {
+        //     gameObject.transform.position += myVector;
+        // }
+        
+        
     }
+
+    // public Vector3 ApplyAccelerationToObject(Vector3 myVector3, float velocity, float maxHeigh)
+    // {
+        
+    // }
     
 }

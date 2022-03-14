@@ -12,8 +12,10 @@ public class PlayerController : MonoBehaviour
     [Header("Physics")] 
     [SerializeField] private float MyGravity = 9.81f;
     
-    [Header("Player")] [SerializeField] private float velocityMovement = 1;
-    [SerializeField] private float velocityJump = 1;
+    [Header("Player")] 
+
+    [SerializeField] private float velocityMovement = 1;
+    [SerializeField] private float speedVelocity = 1;
     [SerializeField] private float maxHighJump = 5;
     public bool isGrounded;
     [SerializeField] private bool resetPlayer;
@@ -135,10 +137,7 @@ public class PlayerController : MonoBehaviour
                 // Debug.Log("Space key pressed");
                 if (canJump)
                 {
-                    // AYUDAAAA NO SE POR QUE NO LO HACE CONSTANTE ESTOY HARTA AHHHHHHHHHHHHHHHHHHHHH
-                    // myTransform.Translate(MyphysicsController.ApplyAccelerationToObject(myTransform.position, velocityJump, maxHighJump));
-                    myTransform.Translate(MyphysicsController.ApplyAccelerationToObject(myTransform.position, velocityJump, maxHighJump));
-                    // Debug.Log(myVector3);
+                   
                 }
                 
             }
