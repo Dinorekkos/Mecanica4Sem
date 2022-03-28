@@ -51,6 +51,7 @@ public class PhysicsController : MonoBehaviour
         //     gameObject.transform.position += myVector;
         // }
         
+        return MyGravity;
         
     }
 

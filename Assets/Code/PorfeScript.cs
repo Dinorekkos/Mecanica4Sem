@@ -1,4 +1,4 @@
-public class Player : MonoBehaviour
+/*public class Player : MonoBehaviour
 {
     [SerializeField]
     private float maxSpeed;
@@ -104,4 +104,4 @@ public class Player : MonoBehaviour
     
     }
    
-}
+}*/

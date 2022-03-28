@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         keyboard = Keyboard.current;
 #endif
         active = true;
-        MyphysicsController = new PhysicsController(MyGravity);
+        // MyphysicsController = new PhysicsController(MyGravity);
         inicialPos = this.gameObject.transform.position;
     }
 
