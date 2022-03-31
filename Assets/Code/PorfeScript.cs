@@ -1,24 +1,13 @@
+using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
     private float maxSpeed;
-    [SerializeField]
-    private float maxJumpForce;
-    [SerializeField]
-    private float gravitygravity;
 
-    [SerializeField]
-    private Vector2 currentSpeed;
-    [SerializeField]
-    private Vector2 currentJumpForce;
     [SerializeField]
     private float currentGravity;//Accel
 
-    //Vector2 SpeedFall = new Vector2(0, -5f);
-    //float SpeedFall;
-    //piso -1
-    //[SerializeField]
-    //private Rigidbody2D rb;
+    
     bool grounded;
 
     bool jumping;
@@ -32,8 +21,7 @@ public class Player : MonoBehaviour
     bool canJump;
 
     float speedV;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         grounded = false;
@@ -54,7 +42,7 @@ public class Player : MonoBehaviour
     {
         if(transform.position.y <= -1) {
             transform.position = new Vector2(transform.position.x, -1);
-            //SpeedFall = 0;
+            
             speedV = 0;
             grounded = true;
             canJump = true;

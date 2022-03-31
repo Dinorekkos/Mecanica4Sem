@@ -23,7 +23,7 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        _playerController.ReceiveInput(_vector2MovInput);
+        // _playerController.ReceiveInput(_vector2MovInput);
     }
 
     private void OnEnable()

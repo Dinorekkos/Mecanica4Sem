@@ -12,27 +12,31 @@ public class PlayerController : MonoBehaviour
     [Header("Physics")] 
     [SerializeField] private float MyGravity = 9.81f;
     
-    [Header("Player")] 
-
+    [Header("Player")]
     [SerializeField] private float velocityMovement = 1;
+    
     [SerializeField] private float speedVelocity = 1;
-    [SerializeField] private float maxHighJump = 5;
-    public bool isGrounded;
+    [SerializeField] private float timeJump = 0;
+
     [SerializeField] private bool resetPlayer;
 
     [SerializeField] private GameObject myGroundCheck;
 
     private PhysicsController MyphysicsController;
-
-    private Vector3 movement;
+    
     private Vector3 inicialPos;
     private Vector3 myPosition;
 
+    private float maxTimeJump;
+    
+    
     private Keyboard keyboard;
-
+    
+    
     private bool active;
-   
     private bool canJump;
+    private bool isJumping;
+    public bool isGrounded;
 
     
     void Start()
@@ -41,12 +45,16 @@ public class PlayerController : MonoBehaviour
         keyboard = Keyboard.current;
 #endif
         active = true;
-        MyphysicsController = new PhysicsController(MyGravity);
-        inicialPos = this.gameObject.transform.position;
+        MyphysicsController = new PhysicsController(MyGravity, speedVelocity);
+        inicialPos = gameObject.transform.position;
+        maxTimeJump = 0.5f;
+        timeJump = 0;
     }
 
     void Update()
     {
+        MyphysicsController.GetGameObjectSpeed(speedVelocity);
+        
         if (resetPlayer)
         {
             ResetPlayerPosition();
@@ -56,8 +64,7 @@ public class PlayerController : MonoBehaviour
             if (keyboard != null)
             {
                 isGrounded = _raycastGround();
-
-                // myPosition = gameObject.transform.position;
+                speedVelocity = MyphysicsController.ApplyGravityToObject(isGrounded);
                 
                 if (isGrounded)
                 {
@@ -65,11 +72,18 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    transform.position += new Vector3(0, -speedVelocity * Time.deltaTime);
                     canJump = false;
-                    MyphysicsController.ApplyGravityToObject(movement, this.gameObject, isGrounded);
+                    timeJump = 0;
+                }
+                
+                if (!isGrounded && !(timeJump >= maxTimeJump))
+                {
+                    speedVelocity = MyphysicsController.ApplyAccelerationToObject();
                 }
                 
                 MovePlayer();
+                
 
             }
         }
@@ -93,54 +107,51 @@ public class PlayerController : MonoBehaviour
             return false;
         }
     }
-    public void ReceiveInput(Vector2 _vector2)
-    {
-        movement = _vector2;
-    }
 
     void MovePlayer()
     {
-        float groundCheckY = myGroundCheck.transform.position.y;
-
-        Transform myTransform = this.gameObject.transform;
         
+        Transform myTransform = this.gameObject.transform;
         
         if (keyboard.anyKey.isPressed)
         {
             if (keyboard.sKey.isPressed)
             {
-                // Debug.Log("MOVE DOWN");
                 myTransform.Translate( -Vector3.forward.normalized * Time.deltaTime * velocityMovement);
             }
 
             if (keyboard.aKey.isPressed)
             {
-                // Debug.Log("MOVE A");
                 myTransform.Translate(  -Vector3.right.normalized * Time.deltaTime * velocityMovement);
             }
 
             if (keyboard.dKey.isPressed)
             {
-                // Debug.Log("MOVE D");
                 myTransform.Translate(  Vector3.right.normalized * Time.deltaTime * velocityMovement);
             }
 
             if (keyboard.wKey.isPressed)
             {
-                // Debug.Log("MOVE W");
-
                 myTransform.Translate(Vector3.forward.normalized * Time.deltaTime * velocityMovement);
             }
 
-            if (keyboard.spaceKey.wasPressedThisFrame)
+            if (keyboard.spaceKey.isPressed && canJump)
             {
-                // Debug.Log("Space key pressed");
-                if (canJump)
-                {
-                   
-                }
+                Debug.Log("<color=#FFAE4D> SPACE PRESSED </color>");
+                isJumping = true;
+                timeJump += Time.deltaTime;
                 
             }
+
+            if (keyboard.spaceKey.wasReleasedThisFrame)
+            {
+                Debug.Log("<color=#E18FFF> SPACE IS RELEASED </color>");
+                isJumping = false;
+                timeJump = 0;
+                canJump = false;
+            }
+            
+            
 
         }
     }
