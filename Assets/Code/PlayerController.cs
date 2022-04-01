@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,31 +8,30 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Physics")] 
-    [SerializeField] private float MyGravity = 9.81f;
-    [SerializeField] private Transform currentPlanet;
-    
-    [Header("Player")]
-    [SerializeField] private float velocityMovement = 1;
-    
+    [Header("Physics")] [SerializeField] private float MyGravity = 9.81f;
+    [SerializeField] 
+    private Transform currentPlanet = null;
+
+    [Header("Player")] [SerializeField] private float velocityMovement = 1;
+
     [SerializeField] private Vector3 speedVelocity;
-    
+
     [SerializeField] private GameObject myGroundCheck;
 
     private PhysicsController MyphysicsController;
 
     private Vector2 moveInput;
     private float maxHeightJump = 1.2f;
-    
+
     private Keyboard keyboard;
-    
-    
+
+
     private bool active;
     private bool canJump;
-    
+
     public bool isGrounded;
 
-    
+
     void Start()
     {
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_STANDALONE_LINUX || UNITY_EDITOR
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 #endif
         active = true;
         MyphysicsController = new PhysicsController(MyGravity, speedVelocity);
-        
+        currentPlanet = null;
     }
 
     void Update()
@@ -47,19 +47,27 @@ public class PlayerController : MonoBehaviour
         if (active)
         {
             isGrounded = _raycastGround();
-            
+
             //Physics
             MyphysicsController.GetGameObjectSpeed(speedVelocity);
             //Receive gravity from the planet
-            speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
-            MyphysicsController.ApplyGravityToObject(transform, speedVelocity);
-            
+            if (currentPlanet == null)
+            {
+                return;
+            }
+            else
+            {
+                speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
+                MyphysicsController.ApplyGravityToObject(transform, speedVelocity);
+            }
+          
+
             //Movement Player
             if (keyboard != null)
             {
                 MovePlayer();
             }
-            
+
             if (isGrounded)
             {
                 canJump = true;
@@ -67,31 +75,39 @@ public class PlayerController : MonoBehaviour
             else
             {
                 canJump = false;
-                
+
             }
-            
-            
+
+
             //Align rotation player with the planet gravity
-            Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
-            transform.rotation = toRotation;
-        }
-    }
-    
-    public bool _raycastGround()
-    {
-        RaycastHit hit = new RaycastHit();
-        
-        if (Physics.Raycast(myGroundCheck.transform.position, -transform.up, out hit,0.1f))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
+            Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) *
+                                    transform.rotation;
+            // transform.rotation = toRotation;
+            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 01f);
         }
     }
 
-    public void ReceiveInput(Vector2 myInput)
+    public bool _raycastGround()
+    {
+        RaycastHit hit = new RaycastHit();
+
+        if (Physics.Raycast(myGroundCheck.transform.position, -transform.up, out hit, 0.1f))
+        {
+            if (hit.collider.isTrigger)
+            {
+                return false;
+            }
+            if (!hit.collider.isTrigger)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+
+public void ReceiveInput(Vector2 myInput)
     {
         moveInput = myInput * Time.deltaTime * velocityMovement;
     }
@@ -118,7 +134,7 @@ public class PlayerController : MonoBehaviour
             
             if (keyboard.spaceKey.isPressed && canJump)
             {
-                // speedVelocity = MyphysicsController.ApplyAccelerationToObject(transform);
+                speedVelocity = MyphysicsController.ApplyAccelerationToObject(transform);
                 transform.position += speedVelocity * maxHeightJump * Time.deltaTime * 200f; 
                
                Debug.Log(speedVelocity);
@@ -126,14 +142,33 @@ public class PlayerController : MonoBehaviour
             
             
         }
-
-     
-
+        
     }
-    
-    
-    
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Planet"))
+        {
+            if (currentPlanet != null)
+            {
+                currentPlanet = null;
+            }
+            currentPlanet = other.gameObject.transform;
+        }
+    }
+
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.CompareTag("Planet"))
+    //     {
+    //         if (currentPlanet != null)
+    //         {
+    //             currentPlanet = null;
+    //         }
+    //         // currentPlanet = other.gameObject.transform;
+    //     }
+    // }
 }
     
     

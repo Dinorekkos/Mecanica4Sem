@@ -37,9 +37,18 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Jump"",
+                    ""name"": ""Mouse"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""cb6aae20-e0bd-4b36-9ec1-e7a0f10c0b77"",
+                    ""id"": ""20965325-4997-4c47-822c-1c053098f3c4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""bdc4ebea-ed48-4ef7-9687-a050f592c66c"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -47,17 +56,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""d7f2b5ff-9f73-46c8-a69c-1df44b651cb2"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""0d022670-367c-4289-a363-019c2109a562"",
@@ -112,6 +110,28 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bbb163f-89ed-437e-beee-9d34f28d6df4"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e96380f1-05eb-4e95-92da-320f308c3e9f"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -121,7 +141,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         // Movement
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Walk = m_Movement.FindAction("Walk", throwIfNotFound: true);
-        m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
+        m_Movement_Mouse = m_Movement.FindAction("Mouse", throwIfNotFound: true);
+        m_Movement_Scroll = m_Movement.FindAction("Scroll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -182,13 +203,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Movement;
     private IMovementActions m_MovementActionsCallbackInterface;
     private readonly InputAction m_Movement_Walk;
-    private readonly InputAction m_Movement_Jump;
+    private readonly InputAction m_Movement_Mouse;
+    private readonly InputAction m_Movement_Scroll;
     public struct MovementActions
     {
         private @PlayerActions m_Wrapper;
         public MovementActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_Movement_Walk;
-        public InputAction @Jump => m_Wrapper.m_Movement_Jump;
+        public InputAction @Mouse => m_Wrapper.m_Movement_Mouse;
+        public InputAction @Scroll => m_Wrapper.m_Movement_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -201,9 +224,12 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Walk.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnWalk;
                 @Walk.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnWalk;
                 @Walk.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnWalk;
-                @Jump.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
+                @Mouse.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMouse;
+                @Mouse.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMouse;
+                @Mouse.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMouse;
+                @Scroll.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnScroll;
+                @Scroll.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnScroll;
+                @Scroll.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnScroll;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -211,9 +237,12 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Walk.started += instance.OnWalk;
                 @Walk.performed += instance.OnWalk;
                 @Walk.canceled += instance.OnWalk;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
+                @Mouse.started += instance.OnMouse;
+                @Mouse.performed += instance.OnMouse;
+                @Mouse.canceled += instance.OnMouse;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
             }
         }
     }
@@ -221,6 +250,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     public interface IMovementActions
     {
         void OnWalk(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
 }

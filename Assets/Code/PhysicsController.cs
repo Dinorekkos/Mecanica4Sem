@@ -55,14 +55,13 @@ public class PhysicsController : MonoBehaviour
         
     }
 
-    public Vector3 ApplyAccelerationToObject( )
+    public Vector3 ApplyAccelerationToObject( Transform _transform)
     {
-        // acceleration = gameObject.transform.up;
-        acceleration = Vector3.up;
+        acceleration = _transform.localEulerAngles;
+        // acceleration = Vector3.up;
         speedVelocity += acceleration;
 
         return speedVelocity;
     }
-
 
 }
