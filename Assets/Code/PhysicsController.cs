@@ -6,9 +6,10 @@ public class PhysicsController : MonoBehaviour
 {
     
     // gravity 9.81
+    public Vector3 gravDirection;
     private float MyGravity = 1;
-    private float acceleration;
-    private float speedVelocity;
+    private Vector3 acceleration;
+    private Vector3 speedVelocity;
 
     void Start()
     {
@@ -21,53 +22,47 @@ public class PhysicsController : MonoBehaviour
         
     }
 
-    public PhysicsController(float _gravity, float _speedVelocity)
+    public PhysicsController(float _gravity, Vector3 _speedVelocity)
     {
         MyGravity = _gravity;
         speedVelocity = _speedVelocity;
     }
     
-    public void GetGameObjectSpeed(float _speed)
+    public void GetGameObjectSpeed(Vector3 _speed)
     {
         speedVelocity = _speed;
     }
 
-    public float ApplyGravityToObject (bool isGrounded)
+    public void ApplyGravityToObject(Transform myTransform, Vector3 gravityDir)
     {
+        myTransform.position += -gravityDir * Time.deltaTime;
+    }
+    public Vector3 SendGravityPlanetToObject(bool isGrounded, Transform myGameObject, Transform planetPos)
+    {
+
+        gravDirection = (myGameObject.transform.position - planetPos.transform.position).normalized;
         
         if(!isGrounded)
         {
-            speedVelocity += (MyGravity * Time.deltaTime);
+            speedVelocity +=  gravDirection * (MyGravity * Time.deltaTime);
         }
         else
         {
-            speedVelocity = 0;
+            speedVelocity = Vector3.zero;
         }
-
-
+        
         return speedVelocity;
-
-        // Vector3 _gravityDirection = Vector3.zero;
-        // _gravityDirection.y -= MyGravity * Time.deltaTime;
-        // myVector = new Vector3 (0,_gravityDirection.y,0);
-
-        // if(isGrounded)
-        // { 
-        // }
-        // else
-        // {
-        //     gameObject.transform.position += myVector;
-        // }
-
-
+        
     }
 
-    public float ApplyAccelerationToObject()
+    public Vector3 ApplyAccelerationToObject( )
     {
+        // acceleration = gameObject.transform.up;
+        acceleration = Vector3.up;
         speedVelocity += acceleration;
 
         return speedVelocity;
     }
 
-    
+
 }

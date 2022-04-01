@@ -1,41 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Quaternion = System.Numerics.Quaternion;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
+
+
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Physics")] 
     [SerializeField] private float MyGravity = 9.81f;
+    [SerializeField] private Transform currentPlanet;
     
     [Header("Player")]
     [SerializeField] private float velocityMovement = 1;
     
-    [SerializeField] private float speedVelocity = 1;
-    [SerializeField] private float timeJump = 0;
-
-    [SerializeField] private bool resetPlayer;
-
+    [SerializeField] private Vector3 speedVelocity;
+    
     [SerializeField] private GameObject myGroundCheck;
 
     private PhysicsController MyphysicsController;
-    
-    private Vector3 inicialPos;
-    private Vector3 myPosition;
 
-    private float maxTimeJump;
-    
+    private Vector2 moveInput;
+    private float maxHeightJump = 1.2f;
     
     private Keyboard keyboard;
     
     
     private bool active;
     private bool canJump;
-    private bool isJumping;
+    
     public bool isGrounded;
 
     
@@ -46,60 +39,50 @@ public class PlayerController : MonoBehaviour
 #endif
         active = true;
         MyphysicsController = new PhysicsController(MyGravity, speedVelocity);
-        inicialPos = gameObject.transform.position;
-        maxTimeJump = 0.5f;
-        timeJump = 0;
+        
     }
 
     void Update()
     {
-        MyphysicsController.GetGameObjectSpeed(speedVelocity);
-        
-        if (resetPlayer)
-        {
-            ResetPlayerPosition();
-        }
         if (active)
         {
+            isGrounded = _raycastGround();
+            
+            //Physics
+            MyphysicsController.GetGameObjectSpeed(speedVelocity);
+            //Receive gravity from the planet
+            speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
+            MyphysicsController.ApplyGravityToObject(transform, speedVelocity);
+            
+            //Movement Player
             if (keyboard != null)
             {
-                isGrounded = _raycastGround();
-                speedVelocity = MyphysicsController.ApplyGravityToObject(isGrounded);
-                
-                if (isGrounded)
-                {
-                    canJump = true;
-                }
-                else
-                {
-                    transform.position += new Vector3(0, -speedVelocity * Time.deltaTime);
-                    canJump = false;
-                    timeJump = 0;
-                }
-                
-                if (!isGrounded && !(timeJump >= maxTimeJump))
-                {
-                    speedVelocity = MyphysicsController.ApplyAccelerationToObject();
-                }
-                
                 MovePlayer();
-                
-
             }
+            
+            if (isGrounded)
+            {
+                canJump = true;
+            }
+            else
+            {
+                canJump = false;
+                
+            }
+            
+            
+            //Align rotation player with the planet gravity
+            Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
+            transform.rotation = toRotation;
         }
     }
-
-    void ResetPlayerPosition()
-    {
-        gameObject.transform.position = inicialPos;
-    }
+    
     public bool _raycastGround()
     {
-        RaycastHit hit;
+        RaycastHit hit = new RaycastHit();
         
-        if (Physics.Raycast(myGroundCheck.transform.position, Vector3.down, 0.1f))
+        if (Physics.Raycast(myGroundCheck.transform.position, -transform.up, out hit,0.1f))
         {
-            // Debug.Log("Raycast is hiting");
             return true;
         }
         else
@@ -108,53 +91,47 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void MovePlayer()
+    public void ReceiveInput(Vector2 myInput)
     {
+        moveInput = myInput * Time.deltaTime * velocityMovement;
+    }
+    
+
+    private void MovePlayer()
+    {
+        float x = moveInput.x;
+        float z = moveInput.y;
         
-        Transform myTransform = this.gameObject.transform;
-        
+        transform.Translate(x,0,z);
+
         if (keyboard.anyKey.isPressed)
         {
-            if (keyboard.sKey.isPressed)
+            //Rotate Player 
+            if (keyboard.eKey.isPressed)
             {
-                myTransform.Translate( -Vector3.forward.normalized * Time.deltaTime * velocityMovement);
+                transform.Rotate(0,150 * Time.deltaTime , 0);
             }
-
-            if (keyboard.aKey.isPressed)
+            if (keyboard.qKey.isPressed)
             {
-                myTransform.Translate(  -Vector3.right.normalized * Time.deltaTime * velocityMovement);
+                transform.Rotate(0,-150 * Time.deltaTime , 0);
             }
-
-            if (keyboard.dKey.isPressed)
-            {
-                myTransform.Translate(  Vector3.right.normalized * Time.deltaTime * velocityMovement);
-            }
-
-            if (keyboard.wKey.isPressed)
-            {
-                myTransform.Translate(Vector3.forward.normalized * Time.deltaTime * velocityMovement);
-            }
-
+            
             if (keyboard.spaceKey.isPressed && canJump)
             {
-                Debug.Log("<color=#FFAE4D> SPACE PRESSED </color>");
-                isJumping = true;
-                timeJump += Time.deltaTime;
-                
-            }
-
-            if (keyboard.spaceKey.wasReleasedThisFrame)
-            {
-                Debug.Log("<color=#E18FFF> SPACE IS RELEASED </color>");
-                isJumping = false;
-                timeJump = 0;
-                canJump = false;
+                // speedVelocity = MyphysicsController.ApplyAccelerationToObject(transform);
+                transform.position += speedVelocity * maxHeightJump * Time.deltaTime * 200f; 
+               
+               Debug.Log(speedVelocity);
             }
             
             
-
         }
+
+     
+
     }
+    
+    
     
 
 }
