@@ -14,23 +14,26 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player")] [SerializeField] private float velocityMovement = 1;
 
+    [SerializeField] private float mass = 1;
+
     [SerializeField] public Vector3 speedVelocity;
 
     [SerializeField] private GameObject myGroundCheck;
 
+    [SerializeField] private float jumpForce = 1f;
+
+
     private PhysicsController MyphysicsController;
-
     private Vector2 moveInput;
-    private float maxHeightJump = 1.2f;
-
     private Keyboard keyboard;
+    private float timeJumping = 0f;
+    private float maxTimeJump = 0.1f;
 
 
     private bool active;
-    private bool canJump;
-
+    public bool canJump;
+    public bool isJumping;
     public bool isGrounded;
-
 
     void Start()
     {
@@ -38,7 +41,7 @@ public class PlayerController : MonoBehaviour
         keyboard = Keyboard.current;
 #endif
         active = true;
-        MyphysicsController = new PhysicsController(MyGravity, speedVelocity);
+        MyphysicsController = new PhysicsController(MyGravity, speedVelocity, mass);
         currentPlanet = null;
     }
 
@@ -131,17 +134,39 @@ public void ReceiveInput(Vector2 myInput)
                 transform.Rotate(0,-150 * Time.deltaTime , 0);
             }
             
-            if (keyboard.spaceKey.isPressed && canJump)
+            if (keyboard.spaceKey.isPressed && canJump && !isJumping)
             {
-                speedVelocity = MyphysicsController.ApplyAccelerationToObject(transform);
-                transform.position += speedVelocity * maxHeightJump * Time.deltaTime * 200f; 
+
+                isJumping = true;
                
-               Debug.Log(speedVelocity);
             }
             
-            
         }
-        
+
+        if (isJumping)
+        {
+            timeJumping += Time.deltaTime;
+
+            if (timeJumping < maxTimeJump)
+            {
+                Debug.Log("Is jumping");
+                speedVelocity = MyphysicsController.ApplyAccelerationUpToObject(transform);
+                transform.position += speedVelocity * Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
+                timeJumping = 0;
+                //speedVelocity = Vector3.zero;
+
+            }
+        }
+
+
+        Debug.Log("<color=#FF5733>Time Jumping =  </color>" + timeJumping);
+        Debug.Log("<color=#59B8FE>Bool jumping =  </color>" + isJumping);
+
+
     }
 
 

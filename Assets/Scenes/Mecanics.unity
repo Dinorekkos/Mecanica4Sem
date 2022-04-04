@@ -426,11 +426,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0f84ad4e696fb42aa5fc8c802c7c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyGravity: 6
+  MyGravity: 0.1
   currentPlanet: {fileID: 0}
   velocityMovement: 10
+  mass: 1
   speedVelocity: {x: 0, y: 0, z: 0}
   myGroundCheck: {fileID: 2049052727}
+  jumpForce: 0.5
+  canJump: 0
+  isJumping: 0
   isGrounded: 0
 --- !u!114 &332765633
 MonoBehaviour:

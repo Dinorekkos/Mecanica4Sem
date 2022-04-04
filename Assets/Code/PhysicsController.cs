@@ -6,8 +6,9 @@ public class PhysicsController : MonoBehaviour
 {
     
     // gravity 9.81
-    public Vector3 gravDirection;
     private float MyGravity = 1;
+    private float myMass;
+    public Vector3 gravDirection;
     private Vector3 acceleration;
     private Vector3 speedVelocity;
 
@@ -22,10 +23,11 @@ public class PhysicsController : MonoBehaviour
         
     }
 
-    public PhysicsController(float _gravity, Vector3 _speedVelocity)
+    public PhysicsController(float _gravity, Vector3 _speedVelocity, float _mass)
     {
         MyGravity = _gravity;
         speedVelocity = _speedVelocity;
+        myMass = _mass;
     }
     
     public void GetGameObjectSpeed(Vector3 _speed)
@@ -35,7 +37,7 @@ public class PhysicsController : MonoBehaviour
 
     public void ApplyGravityToObject(Transform myTransform, Vector3 gravityDir)
     {
-        myTransform.position += -gravityDir * Time.deltaTime;
+        myTransform.position += -gravityDir; //* Time.deltaTime;
     }
     public Vector3 SendGravityPlanetToObject(bool isGrounded, Transform myGameObject, Transform planetPos)
     {
@@ -48,18 +50,19 @@ public class PhysicsController : MonoBehaviour
         }
         else
         {
-            speedVelocity = Vector3.zero;
+            //speedVelocity = Vector3.zero;
         }
         
         return speedVelocity;
         
     }
 
-    public Vector3 ApplyAccelerationToObject( Transform _transform)
+    public Vector3 ApplyAccelerationUpToObject( Transform _transform)
     {
-        acceleration = _transform.localEulerAngles;
-        // acceleration = Vector3.up;
-        speedVelocity += acceleration;
+      
+         acceleration = -1f * (gravDirection);
+        speedVelocity += acceleration ;
+        //Debug.Log(speedVelocity);
 
         return speedVelocity;
     }
