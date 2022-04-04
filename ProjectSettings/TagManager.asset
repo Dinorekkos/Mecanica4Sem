@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Planet
+  - Canion
   layers:
   - Default
   - TransparentFX

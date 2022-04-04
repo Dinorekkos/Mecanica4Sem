@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player")] [SerializeField] private float velocityMovement = 1;
 
-    [SerializeField] private Vector3 speedVelocity;
+    [SerializeField] public Vector3 speedVelocity;
 
     [SerializeField] private GameObject myGroundCheck;
 
@@ -80,8 +80,7 @@ public class PlayerController : MonoBehaviour
 
 
             //Align rotation player with the planet gravity
-            Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) *
-                                    transform.rotation;
+            Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
             // transform.rotation = toRotation;
             transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 01f);
         }
@@ -156,8 +155,16 @@ public void ReceiveInput(Vector2 myInput)
             }
             currentPlanet = other.gameObject.transform;
         }
-    }
 
+        if (other.CompareTag("Canion"))
+        {
+            Canion canion = other.GetComponent<Canion>();
+            canion.SetObjectToThrow(this.gameObject, speedVelocity);
+
+            // Debug.Log("touch canion");
+        }
+    }
+    
     // private void OnTriggerExit(Collider other)
     // {
     //     if (other.CompareTag("Planet"))
