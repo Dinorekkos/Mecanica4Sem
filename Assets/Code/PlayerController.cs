@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         if (active)
         {
             isGrounded = _raycastGround();
-
+            
             //Physics
             MyphysicsController.GetGameObjectSpeed(speedVelocity);
             //Receive gravity from the planet
@@ -63,8 +63,7 @@ public class PlayerController : MonoBehaviour
                 speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
                 MyphysicsController.ApplyGravityToObject(transform, speedVelocity);
             }
-          
-
+            
             //Movement Player
             if (keyboard != null)
             {
@@ -80,8 +79,8 @@ public class PlayerController : MonoBehaviour
                 canJump = false;
 
             }
-
-
+            
+            
             //Align rotation player with the planet gravity
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
             // transform.rotation = toRotation;
@@ -93,15 +92,23 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(myGroundCheck.transform.position, -transform.up, out hit, 0.1f))
+        if (Physics.Raycast(myGroundCheck.transform.position, -transform.up, out hit, 10f))
+        // if (Physics.Raycast(transform.position, -transform.up, out hit, 10f))
         {
+            float distanceToGround = hit.distance;
+            
             if (hit.collider.isTrigger)
             {
+                
                 return false;
             }
             if (!hit.collider.isTrigger)
-            {
-                return true;
+            { 
+                if (distanceToGround <= 0.2f)
+                {
+                    return true;
+                }
+                
             }
         }
         
@@ -119,9 +126,10 @@ public void ReceiveInput(Vector2 myInput)
     {
         float x = moveInput.x;
         float z = moveInput.y;
-        
-        transform.Translate(x,0,z);
 
+
+        transform.Translate(x,0,z);
+            
         if (keyboard.anyKey.isPressed)
         {
             //Rotate Player 
@@ -134,7 +142,7 @@ public void ReceiveInput(Vector2 myInput)
                 transform.Rotate(0,-150 * Time.deltaTime , 0);
             }
             
-            if (keyboard.spaceKey.isPressed && canJump && !isJumping)
+            if (keyboard.spaceKey.wasPressedThisFrame && canJump && !isJumping)
             {
 
                 isJumping = true;
@@ -149,22 +157,23 @@ public void ReceiveInput(Vector2 myInput)
 
             if (timeJumping < maxTimeJump)
             {
-                Debug.Log("Is jumping");
-                speedVelocity = MyphysicsController.ApplyAccelerationUpToObject(transform);
+                // Debug.Log("Is jumping");
+                speedVelocity = MyphysicsController.ApplyAccelerationUpToObject(transform) * jumpForce;
                 transform.position += speedVelocity * Time.deltaTime;
             }
             else
             {
+                // Debug.Log("stop jumping");
                 isJumping = false;
                 timeJumping = 0;
-                //speedVelocity = Vector3.zero;
+                speedVelocity = Vector3.zero;
 
             }
         }
 
 
-        Debug.Log("<color=#FF5733>Time Jumping =  </color>" + timeJumping);
-        Debug.Log("<color=#59B8FE>Bool jumping =  </color>" + isJumping);
+        // Debug.Log("<color=#FF5733>Time Jumping =  </color>" + timeJumping);
+        // Debug.Log("<color=#59B8FE>Bool jumping =  </color>" + isJumping);
 
 
     }
@@ -184,7 +193,7 @@ public void ReceiveInput(Vector2 myInput)
         if (other.CompareTag("Canion"))
         {
             Canion canion = other.GetComponent<Canion>();
-            canion.SetObjectToThrow(this.gameObject, speedVelocity);
+            canion.SetObjectToThrow(this.gameObject, speedVelocity, isGrounded);
 
             // Debug.Log("touch canion");
         }

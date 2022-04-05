@@ -6,6 +6,7 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     [SerializeField] private PlayerController _playerController;
+    [SerializeField] private Canion _canion;
     private PlayerActions _playerActions;
     private PlayerActions.MovementActions playerMovementActions;
 
@@ -19,6 +20,7 @@ public class InputController : MonoBehaviour
         playerMovementActions = _playerActions.Movement;
 
         playerMovementActions.Walk.performed += ctx => _vector2MovInput = ctx.ReadValue<Vector2>();
+        
     }
 
     private void Update()

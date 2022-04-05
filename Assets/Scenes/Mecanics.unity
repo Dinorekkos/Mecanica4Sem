@@ -230,14 +230,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 85257119}
-  m_LocalRotation: {x: 0.43045813, y: 0.5609852, z: 0.43045938, w: 0.5609869}
-  m_LocalPosition: {x: -1.23, y: 13.2, z: 6.25}
+  m_LocalRotation: {x: 0.32261172, y: 0.6288967, z: 0.5524289, w: 0.44185174}
+  m_LocalPosition: {x: -0.44, y: 13.2, z: 5.33}
   m_LocalScale: {x: 1, y: 0.64179, z: 1}
   m_Children:
   - {fileID: 195766883}
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 75}
+  m_LocalEulerAnglesHint: {x: -24.189, y: 89.948, z: 78.524}
 --- !u!114 &85257125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 0}
   placeToThrow: {fileID: 195766882}
+  canionDirection: {x: -0.44, y: 13.2, z: 5.33}
 --- !u!1 &187069890
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +406,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332765627}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.83, y: 20.54, z: 0.2}
+  m_LocalPosition: {x: -1.83, y: 30.8, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2049052728}
@@ -449,6 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerController: {fileID: 332765632}
+  _canion: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
