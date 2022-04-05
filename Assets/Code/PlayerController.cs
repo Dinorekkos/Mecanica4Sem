@@ -27,9 +27,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Keyboard keyboard;
     private float timeJumping = 0f;
-    private float maxTimeJump = 0.1f;
+    private float maxTimeJump = 0.05f;
 
-
+    Canion canion;
     private bool active;
     public bool canJump;
     public bool isJumping;
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
-                MyphysicsController.ApplyGravityToObject(transform, speedVelocity);
+                
             }
             
             //Movement Player
@@ -79,8 +79,15 @@ public class PlayerController : MonoBehaviour
                 canJump = false;
 
             }
-            
-            
+            if(canion!=null) {
+                //canion.ApplyCanionThrow(speedVelocity);
+                
+            }
+           
+            //MyphysicsController.ApplyGravityToObject(transform, speedVelocity);
+
+            transform.position += -speedVelocity;
+
             //Align rotation player with the planet gravity
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
             // transform.rotation = toRotation;
@@ -159,21 +166,21 @@ public void ReceiveInput(Vector2 myInput)
             {
                 // Debug.Log("Is jumping");
                 speedVelocity = MyphysicsController.ApplyAccelerationUpToObject(transform) * jumpForce;
-                transform.position += speedVelocity * Time.deltaTime;
+                
             }
             else
             {
                 // Debug.Log("stop jumping");
                 isJumping = false;
                 timeJumping = 0;
-                speedVelocity = Vector3.zero;
+                //speedVelocity = Vector3.zero;
 
             }
         }
 
 
-        // Debug.Log("<color=#FF5733>Time Jumping =  </color>" + timeJumping);
-        // Debug.Log("<color=#59B8FE>Bool jumping =  </color>" + isJumping);
+         //Debug.Log("<color=#FF5733>Time Jumping =  </color>" + timeJumping);
+         //Debug.Log("<color=#59B8FE>Bool jumping =  </color>" + isJumping);
 
 
     }
@@ -192,8 +199,8 @@ public void ReceiveInput(Vector2 myInput)
 
         if (other.CompareTag("Canion"))
         {
-            Canion canion = other.GetComponent<Canion>();
-            canion.SetObjectToThrow(this.gameObject, speedVelocity, isGrounded);
+            canion = other.GetComponent<Canion>();
+            canion.SetObjectToThrow(this.gameObject, speedVelocity, isGrounded, mass);
 
             // Debug.Log("touch canion");
         }

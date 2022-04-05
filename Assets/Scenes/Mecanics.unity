@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -171,7 +171,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
-  m_Height: 2
+  m_Height: 6.1
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &85257122
@@ -231,7 +231,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 85257119}
   m_LocalRotation: {x: 0.32261172, y: 0.6288967, z: 0.5524289, w: 0.44185174}
-  m_LocalPosition: {x: -0.44, y: 13.2, z: 5.33}
+  m_LocalPosition: {x: -1.71, y: 15.97, z: 3.07}
   m_LocalScale: {x: 1, y: 0.64179, z: 1}
   m_Children:
   - {fileID: 195766883}
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 0}
   placeToThrow: {fileID: 195766882}
-  canionDirection: {x: -0.44, y: 13.2, z: 5.33}
+  canionDirection: {x: -24.189, y: 89.948, z: 78.524}
 --- !u!1 &187069890
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +433,7 @@ MonoBehaviour:
   mass: 1
   speedVelocity: {x: 0, y: 0, z: 0}
   myGroundCheck: {fileID: 2049052727}
-  jumpForce: 0.5
+  jumpForce: 0.1
   canJump: 0
   isJumping: 0
   isGrounded: 0
