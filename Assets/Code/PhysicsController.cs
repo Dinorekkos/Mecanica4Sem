@@ -57,7 +57,7 @@ public class PhysicsController : MonoBehaviour
         
     }
 
-    public Vector3 ApplyAccelerationUpToObject( Transform _transform)
+    public Vector3 ApplyAccelerationUpToObject()
     {
         acceleration = -0.5f * (gravDirection);
         speedVelocity += acceleration;
@@ -65,5 +65,7 @@ public class PhysicsController : MonoBehaviour
 
         return speedVelocity;
     }
+    
+    
 
 }

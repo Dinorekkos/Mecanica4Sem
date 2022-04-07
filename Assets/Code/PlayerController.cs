@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player")] [SerializeField] private float velocityMovement = 1;
 
-    [SerializeField] private float mass = 1;
+    [SerializeField] private float mass = 2;
 
     [SerializeField] public Vector3 speedVelocity;
 
@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
     public bool canJump;
     public bool isJumping;
     public bool isGrounded;
+    
+    bool canThrow = false;
+    private bool isThrowing = false;
 
     void Start()
     {
@@ -65,10 +68,7 @@ public class PlayerController : MonoBehaviour
             }
             
             //Movement Player
-            if (keyboard != null)
-            {
-                MovePlayer();
-            }
+            MovePlayer();
 
             if (isGrounded)
             {
@@ -79,14 +79,28 @@ public class PlayerController : MonoBehaviour
                 canJump = false;
 
             }
-            if(canion!=null) {
-                //canion.ApplyCanionThrow(speedVelocity);
+
+            
+            if(canion!=null)
+            {
+                canThrow = canion.CanThrow;
+                isThrowing = canion.IsThrowing;
+                if(isThrowing)
+                {
+                    speedVelocity = canion.ApplyCanionThrow();
+                }
                 
             }
-           
-            //MyphysicsController.ApplyGravityToObject(transform, speedVelocity);
-
-            transform.position += -speedVelocity;
+            if(canThrow)
+            {
+               //Stop gravity if object is in the canion
+            }
+            else
+            {
+                MyphysicsController.ApplyGravityToObject(transform, speedVelocity); 
+            }
+            
+            // transform.position += -speedVelocity;
 
             //Align rotation player with the planet gravity
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
@@ -164,16 +178,13 @@ public void ReceiveInput(Vector2 myInput)
 
             if (timeJumping < maxTimeJump)
             {
-                // Debug.Log("Is jumping");
-                speedVelocity = MyphysicsController.ApplyAccelerationUpToObject(transform) * jumpForce;
+                speedVelocity = MyphysicsController.ApplyAccelerationUpToObject() * jumpForce;
                 
             }
             else
             {
-                // Debug.Log("stop jumping");
                 isJumping = false;
                 timeJumping = 0;
-                //speedVelocity = Vector3.zero;
 
             }
         }
@@ -200,23 +211,27 @@ public void ReceiveInput(Vector2 myInput)
         if (other.CompareTag("Canion"))
         {
             canion = other.GetComponent<Canion>();
-            canion.SetObjectToThrow(this.gameObject, speedVelocity, isGrounded, mass);
+            canThrow = true;
+            canion.SetObjectToThrow(this.gameObject, speedVelocity, MyphysicsController, mass);
 
             // Debug.Log("touch canion");
         }
     }
     
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (other.CompareTag("Planet"))
-    //     {
-    //         if (currentPlanet != null)
-    //         {
-    //             currentPlanet = null;
-    //         }
-    //         // currentPlanet = other.gameObject.transform;
-    //     }
-    // }
+    private void OnTriggerExit(Collider other)
+    {
+    if (other.CompareTag("Canion"))
+    {
+        if (canion != null)
+        {
+            canThrow = false;
+            canion = null;
+            
+        }
+        // currentPlanet
+        //= other.gameObject.transform;
+    }
+    }
 }
     
     

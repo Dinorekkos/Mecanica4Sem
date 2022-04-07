@@ -16,6 +16,8 @@ public class Canion : MonoBehaviour
     //[SerializeField] private PlayerController player;
 
     private float massObject;
+    private float timeThrowing;
+    private float maxTimeThrowing = 0.05f;
     private bool canThrowGO = false;
     private bool isthrowing = false;
     private Keyboard _keyboard;
@@ -24,6 +26,7 @@ public class Canion : MonoBehaviour
     private Vector3 canionPos;
     private Vector3 speed;
 
+    private PhysicsController physics;
     public bool CanThrow
     
     {
@@ -31,12 +34,21 @@ public class Canion : MonoBehaviour
         set { canThrowGO = value; }
     }
 
-    public void SetObjectToThrow(GameObject _goToThrow, Vector3 _objectSpeed, bool Isgrounded, float mass)
+    public bool IsThrowing
+    {
+        get
+        {
+            return isthrowing;
+        }
+    }
+
+    public void SetObjectToThrow(GameObject _goToThrow, Vector3 _objectSpeed, PhysicsController _physicsController, float _mass)
     {
         _goToThrow.transform.position = canionPos;
         selectedObject = _goToThrow;
-        massObject = mass;
+        massObject = _mass;
         speed = _objectSpeed;
+        physics = _physicsController;
         
             if (_goToThrow != null)
             {
@@ -44,21 +56,18 @@ public class Canion : MonoBehaviour
                
             }
 
-        Debug.Log(CanThrow);
+        // Debug.Log(CanThrow);
     
     
     }
     void Start() {
         _keyboard = Keyboard.current;
-       
-
         
-
     }
     
     public void ThrowObject()
     {
-        Vector3 force = canionDirection  * 20;
+        Vector3 force = canionDirection  * 0.2f;
         Vector3 acceleration = Vector3.zero; ;
 
         if (CanThrow)
@@ -66,10 +75,11 @@ public class Canion : MonoBehaviour
 
             speed = Vector3.zero;
             selectedObject.transform.position = canionPos;
+            
 
             if (_keyboard.anyKey.isPressed)
             {
-                if (_keyboard.enterKey.wasPressedThisFrame)
+                if (_keyboard.enterKey.wasPressedThisFrame && CanThrow && !isthrowing)
                 {
                     isthrowing = true;
                     CanThrow = false;
@@ -80,19 +90,31 @@ public class Canion : MonoBehaviour
             }
         }
 
-        if(isthrowing) 
+        if(isthrowing)
         {
-
-
-
-            speed += acceleration * Time.deltaTime;
-            //selectedObject.transform.position += speed;
+            timeThrowing += Time.deltaTime;
+            if (timeThrowing < maxTimeThrowing)
+            {
+                speed += acceleration * Time.deltaTime;
+            }
+            else
+            {
+                isthrowing = false;
+                timeThrowing = 0;
+                
+            }
 
             Debug.Log("Throw Object to direction" + canionDirection);
 
         }
+        else
+        {
+            // Debug.Log("Finish Throwing object");
 
-        
+            // selectedObject = null;
+        }
+
+
     }
 
     public Vector3 ApplyCanionThrow() {
