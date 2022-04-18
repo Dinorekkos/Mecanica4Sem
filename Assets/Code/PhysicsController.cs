@@ -30,14 +30,16 @@ public class PhysicsController : MonoBehaviour
         myMass = _mass;
     }
     
-    public void GetGameObjectSpeed(Vector3 _speed)
+    public void GetGameObjectData(Vector3 _speed , float _gravity)
     {
         speedVelocity = _speed;
+        MyGravity = _gravity;
+
     }
 
     public void ApplyGravityToObject(Transform myTransform, Vector3 speedDir)
     {
-        myTransform.position += -speedDir; //* Time.deltaTime;
+        myTransform.position += -speedDir; 
     }
     public Vector3 SendGravityPlanetToObject(bool isGrounded, Transform myGameObject, Transform planetPos)
     {

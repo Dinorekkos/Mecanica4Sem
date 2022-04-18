@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = _raycastGround();
             
             //Physics
-            MyphysicsController.GetGameObjectSpeed(speedVelocity);
+            MyphysicsController.GetGameObjectData(speedVelocity, MyGravity);
             //Receive gravity from the planet
             if (currentPlanet == null)
             {
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
                 MyphysicsController.ApplyGravityToObject(transform, speedVelocity); 
             }
             
-            // transform.position += -speedVelocity;
+          
 
             //Align rotation player with the planet gravity
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
@@ -189,11 +189,6 @@ public void ReceiveInput(Vector2 myInput)
             }
         }
 
-
-         //Debug.Log("<color=#FF5733>Time Jumping =  </color>" + timeJumping);
-         //Debug.Log("<color=#59B8FE>Bool jumping =  </color>" + isJumping);
-
-
     }
 
 
@@ -206,6 +201,10 @@ public void ReceiveInput(Vector2 myInput)
                 currentPlanet = null;
             }
             currentPlanet = other.gameObject.transform;
+
+            PlanetData planetData = other.GetComponent<PlanetData>();
+
+            MyGravity = planetData.PlanetGravity;
         }
 
         if (other.CompareTag("Canion"))
