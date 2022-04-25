@@ -6,6 +6,7 @@ public class PlanetData : MonoBehaviour
 {
 
     [SerializeField] private float planetGravity;
+    [SerializeField] private float planetRadius = 5f;
 
     public float PlanetGravity
     {
@@ -13,6 +14,11 @@ public class PlanetData : MonoBehaviour
         set { planetGravity = value; }
     }
 
+    public float PlanetRadius{
+        get {return planetRadius;}
+        
+    
+    }
 
 
     public void CheckPlanetGround()

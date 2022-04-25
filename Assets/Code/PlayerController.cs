@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     bool canThrow = false;
     private bool isThrowing = false;
 
+     PlanetData planetData;
+
     void Start()
     {
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_STANDALONE_LINUX || UNITY_EDITOR
@@ -91,6 +93,8 @@ public class PlayerController : MonoBehaviour
                 }
                 
             }
+           
+           
             if(canThrow)
             {
                //Stop gravity if object is in the canion
@@ -116,22 +120,49 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(myGroundCheck.transform.position, -transform.up, out hit, 10f))
         // if (Physics.Raycast(transform.position, -transform.up, out hit, 10f))
         {
-            float distanceToGround = hit.distance;
+            
             
             if (hit.collider.isTrigger)
             {
                 
                 return false;
             }
-            if (!hit.collider.isTrigger)
-            { 
-                if (distanceToGround <= 0.2f)
-                {
-                    return true;
-                }
+            // if (!hit.collider.isTrigger)
+            // { 
+                            
                 
-            }
+            // }
+           
         }
+        float distanceCenterPlanet = MyphysicsController.dirMagnitud.magnitude;
+
+        if(planetData!=null)
+        {
+            //  Debug.Log(distanceCenterPlanet);
+                 if (distanceCenterPlanet <= planetData.PlanetRadius)
+                    {
+                        Vector3 placeToMove = (MyphysicsController.gravDirection * planetData.PlanetRadius) + currentPlanet.transform.position;
+                        Debug.Log(placeToMove);
+                        transform.position = placeToMove;
+                        return true;
+                     }else
+                     {
+                        return false;
+                     }
+
+         }
+
+            // Vector3 gravDirection = MyphysicsController.gravDirection;
+            // if(currentPlanet!= null && planetData != null)
+            // {
+            //      if(gravDirection.magnitude <= planetData.PlanetGround)
+            //     {
+            //          return true;
+            //     }else
+            //     {
+            //         return false;
+            //     }
+            // }
         
         return false;
     }
@@ -202,7 +233,7 @@ public void ReceiveInput(Vector2 myInput)
             }
             currentPlanet = other.gameObject.transform;
 
-            PlanetData planetData = other.GetComponent<PlanetData>();
+            planetData = other.GetComponent<PlanetData>();
 
             MyGravity = planetData.PlanetGravity;
         }

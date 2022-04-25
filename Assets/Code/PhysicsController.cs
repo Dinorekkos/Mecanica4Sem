@@ -9,20 +9,11 @@ public class PhysicsController : MonoBehaviour
     private float MyGravity = 1;
     private float myMass;
     public Vector3 gravDirection;
+    public Vector3 dirMagnitud;
     private Vector3 acceleration;
     private Vector3 speedVelocity;
 
-    void Start()
-    {
-        // ground = GameObject.FindGameObjectWithTag("Ground").transform;
-        // Debug.Log(ground.name);
-    }
-    
-    void Update()
-    {
-        
-    }
-
+   
     public PhysicsController(float _gravity, Vector3 _speedVelocity, float _mass)
     {
         MyGravity = _gravity;
@@ -45,6 +36,7 @@ public class PhysicsController : MonoBehaviour
     {
 
         gravDirection = (myGameObject.transform.position - planetPos.transform.position).normalized;
+        dirMagnitud = (myGameObject.transform.position - planetPos.transform.position);
         
         if(!isGrounded)
         {
