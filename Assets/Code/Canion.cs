@@ -104,7 +104,7 @@ public class Canion : MonoBehaviour
                 
             }
 
-            Debug.Log("Throw Object to direction" + canionDirection);
+            // Debug.Log("Throw Object to direction" + canionDirection);
 
         }
         else

@@ -54,10 +54,8 @@ public class PlayerController : MonoBehaviour
     {
         if (active)
         {
-            isGrounded = _raycastGround();
-            
-            //Physics
             MyphysicsController.GetGameObjectData(speedVelocity, MyGravity);
+            
             //Receive gravity from the planet
             if (currentPlanet == null)
             {
@@ -66,6 +64,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
+                isGrounded = _raycastGround();
                 
             }
             
@@ -116,55 +115,33 @@ public class PlayerController : MonoBehaviour
     public bool _raycastGround()
     {
         RaycastHit hit = new RaycastHit();
-
+        
         if (Physics.Raycast(myGroundCheck.transform.position, -transform.up, out hit, 10f))
-        // if (Physics.Raycast(transform.position, -transform.up, out hit, 10f))
         {
-            
-            
             if (hit.collider.isTrigger)
             {
-                
                 return false;
             }
-            // if (!hit.collider.isTrigger)
-            // { 
-                            
-                
-            // }
-           
         }
-        float distanceCenterPlanet = MyphysicsController.dirMagnitud.magnitude;
-
-        if(planetData!=null)
-        {
-            //  Debug.Log(distanceCenterPlanet);
-                 if (distanceCenterPlanet <= planetData.PlanetRadius)
-                    {
-                        Vector3 placeToMove = (MyphysicsController.gravDirection * planetData.PlanetRadius) + currentPlanet.transform.position;
-                        Debug.Log(placeToMove);
-                        transform.position = placeToMove;
-                        return true;
-                     }else
-                     {
-                        return false;
-                     }
-
-         }
-
-            // Vector3 gravDirection = MyphysicsController.gravDirection;
-            // if(currentPlanet!= null && planetData != null)
-            // {
-            //      if(gravDirection.magnitude <= planetData.PlanetGround)
-            //     {
-            //          return true;
-            //     }else
-            //     {
-            //         return false;
-            //     }
-            // }
         
-        return false;
+        if (planetData != null)
+        {
+            float distanceToPlanetCenter = MyphysicsController.dirMagnitud.magnitude;
+            //if Player Is inside the planet ground move player to the top ground
+            if (distanceToPlanetCenter < planetData.PlanetRadius)
+            {
+                Vector3 placeToMove = (MyphysicsController.gravDirection * planetData.PlanetRadius) + currentPlanet.transform.position;
+                transform.position = placeToMove ;
+                return true;
+            }
+            // if player is above planet ground, player is not grounded 
+            if(distanceToPlanetCenter > planetData.PlanetRadius)
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
 
 
@@ -221,8 +198,7 @@ public void ReceiveInput(Vector2 myInput)
         }
 
     }
-
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Planet"))
@@ -244,24 +220,24 @@ public void ReceiveInput(Vector2 myInput)
             canThrow = true;
             canion.SetObjectToThrow(this.gameObject, speedVelocity, MyphysicsController, mass);
 
-            // Debug.Log("touch canion");
         }
     }
     
     private void OnTriggerExit(Collider other)
     {
-    if (other.CompareTag("Canion"))
-    {
-        if (canion != null)
+        if (other.CompareTag("Canion"))
         {
-            canThrow = false;
-            canion = null;
-            
+            if (canion != null)
+            {
+                canThrow = false;
+                canion = null;
+                
+            }
         }
-        // currentPlanet
-        //= other.gameObject.transform;
     }
-    }
+    
+    
+    
 }
     
     

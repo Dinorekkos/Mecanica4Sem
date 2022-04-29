@@ -11,7 +11,6 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Code/CommonPhysicsObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d3b66f0ad4e34a55b6ef91ab8487819313c000/d4/623cb81c/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/Canion.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e99ee6d5c9684510a35b84c7173649f918000/90/58a2067b/RaycastHit.cs" root0="SKIP_HIGHLIGHTING" />
@@ -74,6 +73,7 @@
       <workItem from="1649199618707" duration="94000" />
       <workItem from="1649213905028" duration="895000" />
       <workItem from="1649284887125" duration="3569000" />
+      <workItem from="1651187354296" duration="3568000" />
     </task>
     <servers />
   </component>

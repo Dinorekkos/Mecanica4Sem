@@ -55,7 +55,6 @@ public class PhysicsController : MonoBehaviour
     {
         acceleration = -0.5f * (gravDirection);
         speedVelocity += acceleration;
-        //Debug.Log(speedVelocity);
 
         return speedVelocity;
     }

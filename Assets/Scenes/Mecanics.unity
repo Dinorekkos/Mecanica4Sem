@@ -231,7 +231,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 85257119}
   m_LocalRotation: {x: 0.32261172, y: 0.6288967, z: 0.5524289, w: 0.44185174}
-  m_LocalPosition: {x: -1.71, y: 15.97, z: 3.07}
+  m_LocalPosition: {x: -26.7, y: 6.3, z: 0}
   m_LocalScale: {x: 1, y: 0.64179, z: 1}
   m_Children:
   - {fileID: 195766883}
@@ -433,7 +433,7 @@ MonoBehaviour:
   mass: 1
   speedVelocity: {x: 0, y: 0, z: 0}
   myGroundCheck: {fileID: 2049052727}
-  jumpForce: 0.1
+  jumpForce: 1
   canJump: 0
   isJumping: 0
   isGrounded: 0
@@ -865,7 +865,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1807746111
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -903,7 +903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1807746110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.98, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 1589972533}
@@ -984,7 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a641a9ed26f06479bc16e7753dbdd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planetGravity: 20
+  planetGravity: 15
   planetRadius: 5
 --- !u!4 &1972220398
 Transform:
