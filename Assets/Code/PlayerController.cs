@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
             {
                 speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
                 isGrounded = _raycastGround();
+
                 
             }
             
@@ -81,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
             }
 
-            
+        
             if(canion!=null)
             {
                 canThrow = canion.CanThrow;
@@ -94,16 +95,11 @@ public class PlayerController : MonoBehaviour
             }
            
            
-            if(canThrow)
-            {
-               //Stop gravity if object is in the canion
-            }
-            else
+            if(!canThrow)
             {
                 MyphysicsController.ApplyGravityToObject(transform, speedVelocity); 
+               //Stop gravity if object is in the canion
             }
-            
-          
 
             //Align rotation player with the planet gravity
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
@@ -114,32 +110,25 @@ public class PlayerController : MonoBehaviour
 
     public bool _raycastGround()
     {
-        RaycastHit hit = new RaycastHit();
-        
-        if (Physics.Raycast(myGroundCheck.transform.position, -transform.up, out hit, 10f))
-        {
-            if (hit.collider.isTrigger)
-            {
-                return false;
-            }
-        }
         
         if (planetData != null)
         {
-            float distanceToPlanetCenter = MyphysicsController.dirMagnitud.magnitude;
+            float offsetPlayer = 0.5f;
+            float distanceToPlanetCenter = MyphysicsController.dirMagnitud.magnitude ;
             //if Player Is inside the planet ground move player to the top ground
-            if (distanceToPlanetCenter < planetData.PlanetRadius)
+            if (distanceToPlanetCenter <= planetData.PlanetRadius + offsetPlayer)
             {
-                Vector3 placeToMove = (MyphysicsController.gravDirection * planetData.PlanetRadius) + currentPlanet.transform.position;
-                transform.position = placeToMove ;
+                Vector3 placeToMove = ((MyphysicsController.gravDirection * offsetPlayer) + MyphysicsController.gravDirection * planetData.PlanetRadius) + currentPlanet.transform.position ;
+                transform.position = placeToMove;
                 return true;
             }
             // if player is above planet ground, player is not grounded 
-            if(distanceToPlanetCenter > planetData.PlanetRadius)
+            if(distanceToPlanetCenter > planetData.PlanetRadius + offsetPlayer)
             {
                 return false;
             }
         }
+        
         
         return true;
     }
@@ -219,8 +208,14 @@ public void ReceiveInput(Vector2 myInput)
             canion = other.GetComponent<Canion>();
             canThrow = true;
             canion.SetObjectToThrow(this.gameObject, speedVelocity, MyphysicsController, mass);
-
         }
+
+        if(other.CompareTag("FrictionZone"))
+        {
+            Debug.Log("Entra en zona de fricción");
+        }
+
+
     }
     
     private void OnTriggerExit(Collider other)

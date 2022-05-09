@@ -45,6 +45,7 @@ public class PhysicsController : MonoBehaviour
         else
         {
             speedVelocity = Vector3.zero;
+    
         }
         
         return speedVelocity;
@@ -59,6 +60,10 @@ public class PhysicsController : MonoBehaviour
         return speedVelocity;
     }
     
-    
+    public Vector3 ApplyDragForce(){
+
+
+        return speedVelocity;
+    }
 
 }
