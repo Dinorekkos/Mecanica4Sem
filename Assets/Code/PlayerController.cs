@@ -212,7 +212,8 @@ public void ReceiveInput(Vector2 myInput)
 
         if(other.CompareTag("FrictionZone"))
         {
-            Debug.Log("Entra en zona de fricción");
+            Debug.Log(speedVelocity +" cON FRICCION");
+            speedVelocity = MyphysicsController.ApplyFrictionForce();
         }
 
 
@@ -228,6 +229,10 @@ public void ReceiveInput(Vector2 myInput)
                 canion = null;
                 
             }
+        }
+        if(other.CompareTag("FrictionZone"))
+        {
+             Debug.Log(speedVelocity + "sIN FRICCION");
         }
     }
     

@@ -60,9 +60,10 @@ public class PhysicsController : MonoBehaviour
         return speedVelocity;
     }
     
-    public Vector3 ApplyDragForce(){
+    public Vector3 ApplyFrictionForce(){
 
-
+        Vector3 friction = -speedVelocity * 0.5f;
+        speedVelocity = friction ;
         return speedVelocity;
     }
 
