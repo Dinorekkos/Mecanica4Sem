@@ -9,7 +9,9 @@ public class Canion : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] private GameObject selectedObject;
-    [SerializeField] private GameObject placeToThrow;
+    [SerializeField] private GameObject place1;
+    [SerializeField] private GameObject place2;
+
 
     [SerializeField] private Vector3 canionDirection;
 
@@ -67,7 +69,7 @@ public class Canion : MonoBehaviour
     
     public void ThrowObject()
     {
-        Vector3 force = canionDirection  * 0.2f;
+        Vector3 force = canionDirection  * 100f;
         Vector3 acceleration = Vector3.zero; ;
 
         if (CanThrow)
@@ -128,9 +130,12 @@ public class Canion : MonoBehaviour
         canionPos = this.gameObject.transform.position;
         canionRotation = this.gameObject.transform.rotation;
 
-        canionDirection = canionRotation.eulerAngles;
+        //canionDirection = canionRotation.eulerAngles;
 
-        //Debug.DrawRay(canionPos, canionRotation.eulerAngles);
+        canionDirection = (place1.transform.position - place2.transform.position).normalized;
+
+        Debug.DrawRay(canionPos, canionDirection);
+
         ThrowObject();
     }
 }

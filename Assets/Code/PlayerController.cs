@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject myGroundCheck;
 
-    [SerializeField] private float jumpForce = 1f;
+    [SerializeField] private float jumpForce = 0.01f;
 
 
     private PhysicsController MyphysicsController;
