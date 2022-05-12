@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PhysicsController : MonoBehaviour
@@ -32,7 +30,7 @@ public class PhysicsController : MonoBehaviour
     {
         myTransform.position += -speedDir; 
     }
-    public Vector3 SendGravityPlanetToObject(bool isGrounded, Transform myGameObject, Transform planetPos)
+    public Vector3 SendGravityPlanetToObject(bool isGrounded, Transform myGameObject, Transform planetPos, Vector3 placeGravDir)
     {
 
         gravDirection = (myGameObject.transform.position - planetPos.transform.position).normalized;
@@ -44,8 +42,10 @@ public class PhysicsController : MonoBehaviour
         }
         else
         {
-            speedVelocity = Vector3.zero;
-    
+            //Change para drag 
+            // speedVelocity = Vector3.zero;
+            speedVelocity = placeGravDir.normalized * 0.1f;
+
         }
         
         return speedVelocity;
@@ -54,7 +54,7 @@ public class PhysicsController : MonoBehaviour
 
     public Vector3 ApplyAccelerationUpToObject()
     {
-        acceleration = -0.1f * (gravDirection);
+        acceleration = gravDirection * -1f;
         speedVelocity += acceleration;
 
         return speedVelocity;
@@ -66,5 +66,18 @@ public class PhysicsController : MonoBehaviour
         speedVelocity = friction ;
         return speedVelocity;
     }
+
+    public Vector3 ApplyDragginForce()
+    {
+        float density = 10;
+        float coeficentDrag = 1;
+        float dragArea = 1;
+        
+        float dragNormal = Mathf.Sqrt((speedVelocity.x * speedVelocity.x) + (speedVelocity.y * speedVelocity.y) + (speedVelocity.z * speedVelocity.z));
+        speedVelocity += -0.5f * density * dragNormal * coeficentDrag * dragArea * speedVelocity;
+        
+        return speedVelocity;
+    }
+    
 
 }

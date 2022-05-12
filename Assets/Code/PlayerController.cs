@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject myGroundCheck;
 
-    [SerializeField] private float jumpForce = 0.01f;
+    [SerializeField] private float jumpForce = 100f;
 
 
     private PhysicsController MyphysicsController;
@@ -34,11 +34,16 @@ public class PlayerController : MonoBehaviour
     public bool canJump;
     public bool isJumping;
     public bool isGrounded;
+
+    public bool isFrictioning = false;
+    public bool isDragging;
     
     bool canThrow = false;
     private bool isThrowing = false;
 
      PlanetData planetData;
+
+     public Vector3 placeToMove;
 
     void Start()
     {
@@ -63,24 +68,25 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
-                isGrounded = _raycastGround();
-
+                speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
                 
+                isGrounded = _raycastGround();
+                
+                if (isGrounded)
+                {
+                    canJump = true;
+                }
+                else
+                {
+                    canJump = false;
+
+                }
             }
             
             //Movement Player
             MovePlayer();
 
-            if (isGrounded)
-            {
-                canJump = true;
-            }
-            else
-            {
-                canJump = false;
-
-            }
+           
 
         
             if(canion!=null)
@@ -94,13 +100,16 @@ public class PlayerController : MonoBehaviour
                 
             }
            
-           
-            if(!canThrow)
+           //Quitar is gropunded
+            if(!canThrow && !isGrounded)
             {
                 MyphysicsController.ApplyGravityToObject(transform, speedVelocity); 
                //Stop gravity if object is in the canion
             }
 
+            
+            
+            
             //Align rotation player with the planet gravity
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;
             // transform.rotation = toRotation;
@@ -118,7 +127,7 @@ public class PlayerController : MonoBehaviour
             //if Player Is inside the planet ground move player to the top ground
             if (distanceToPlanetCenter <= planetData.PlanetRadius + offsetPlayer)
             {
-                Vector3 placeToMove = ((MyphysicsController.gravDirection * offsetPlayer) + MyphysicsController.gravDirection * planetData.PlanetRadius) + currentPlanet.transform.position ;
+                placeToMove = ((MyphysicsController.gravDirection * offsetPlayer) + MyphysicsController.gravDirection * planetData.PlanetRadius) + currentPlanet.transform.position ;
                 transform.position = placeToMove;
                 return true;
             }
@@ -136,7 +145,8 @@ public class PlayerController : MonoBehaviour
 
 public void ReceiveInput(Vector2 myInput)
     {
-        moveInput = myInput * Time.deltaTime * velocityMovement;
+        //Quitar speed velocity despues hahah
+        moveInput = (myInput * speedVelocity) * Time.deltaTime * velocityMovement;
     }
     
 
@@ -146,8 +156,8 @@ public void ReceiveInput(Vector2 myInput)
         float z = moveInput.y;
 
 
-        transform.Translate(x,0,z);
-            
+        transform.Translate(x ,0 ,z );
+        
         if (keyboard.anyKey.isPressed)
         {
             //Rotate Player 
@@ -164,7 +174,6 @@ public void ReceiveInput(Vector2 myInput)
             {
 
                 isJumping = true;
-               
             }
             
         }
@@ -176,13 +185,11 @@ public void ReceiveInput(Vector2 myInput)
             if (timeJumping < maxTimeJump)
             {
                 speedVelocity = MyphysicsController.ApplyAccelerationUpToObject() * jumpForce;
-                
             }
             else
             {
                 isJumping = false;
                 timeJumping = 0;
-
             }
         }
 
@@ -212,11 +219,14 @@ public void ReceiveInput(Vector2 myInput)
 
         if(other.CompareTag("FrictionZone"))
         {
-            Debug.Log(speedVelocity +" cON FRICCION");
-            speedVelocity = MyphysicsController.ApplyFrictionForce();
+            isFrictioning = true;
+            StartCoroutine("FrictionInPlayer");
         }
-
-
+        if (other.CompareTag("DragZone"))
+        {
+            isDragging = true;
+            StartCoroutine("DragInPlayer");
+        }
     }
     
     private void OnTriggerExit(Collider other)
@@ -232,8 +242,35 @@ public void ReceiveInput(Vector2 myInput)
         }
         if(other.CompareTag("FrictionZone"))
         {
-             Debug.Log(speedVelocity + "sIN FRICCION");
+             isFrictioning = false;
+             StopCoroutine("FrictionInPlayer");
         }
+
+        if (other.CompareTag("DragZone"))
+        {
+            isDragging = false;
+            StopCoroutine("DragInPlayer");
+        }
+    }
+
+    IEnumerator FrictionInPlayer()
+    {
+        while (isFrictioning)
+        {
+            speedVelocity = MyphysicsController.ApplyFrictionForce();
+            yield return null;
+
+        }
+    }
+
+    IEnumerator DragInPlayer()
+    {
+        while (isDragging)
+        {
+            speedVelocity = MyphysicsController.ApplyDragginForce();
+            yield return null;
+        }
+
     }
     
     
