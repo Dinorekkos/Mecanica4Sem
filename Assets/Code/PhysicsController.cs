@@ -26,7 +26,7 @@ public class PhysicsController : MonoBehaviour
 
     }
 
-    public void ApplyGravityToObject(Transform myTransform, Vector3 speedDir)
+    public void ApplySpeedToObject(Transform myTransform, Vector3 speedDir)
     {
         myTransform.position += -speedDir; 
     }
@@ -44,8 +44,7 @@ public class PhysicsController : MonoBehaviour
         {
             //Change para drag 
             // speedVelocity = Vector3.zero;
-            speedVelocity = placeGravDir.normalized * 0.1f;
-
+            // speedVelocity = placeGravDir.normalized * 0.1f;
         }
         
         return speedVelocity;

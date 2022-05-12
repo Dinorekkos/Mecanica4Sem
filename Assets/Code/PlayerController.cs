@@ -68,7 +68,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
+                // if (!isGrounded)
+                // {
+                    speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
+                // }
                 
                 isGrounded = _raycastGround();
                 
@@ -83,12 +86,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
             
-            //Movement Player
-            MovePlayer();
-
-           
-
-        
             if(canion!=null)
             {
                 canThrow = canion.CanThrow;
@@ -101,13 +98,14 @@ public class PlayerController : MonoBehaviour
             }
            
            //Quitar is gropunded
-            if(!canThrow && !isGrounded)
+            if(!canThrow)
             {
-                MyphysicsController.ApplyGravityToObject(transform, speedVelocity); 
+                MyphysicsController.ApplySpeedToObject(transform, speedVelocity); 
                //Stop gravity if object is in the canion
             }
 
-            
+            //Movement Player
+            MovePlayer();
             
             
             //Align rotation player with the planet gravity

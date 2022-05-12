@@ -675,7 +675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &1038949279
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -747,7 +747,7 @@ Transform:
   m_GameObject: {fileID: 1038949278}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -28.46, y: 2.28, z: 0}
-  m_LocalScale: {x: 5.3807917, y: 5.3807917, z: 5.3807917}
+  m_LocalScale: {x: 8.214316, y: 8.214316, z: 8.214316}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -1161,9 +1161,10 @@ GameObject:
   - component: {fileID: 2033284022}
   - component: {fileID: 2033284021}
   - component: {fileID: 2033284020}
+  - component: {fileID: 2033284024}
   m_Layer: 0
   m_Name: Planet
-  m_TagString: Untagged
+  m_TagString: FrictionZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1244,6 +1245,22 @@ Transform:
   m_Father: {fileID: 1972220398}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &2033284024
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033284019}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &2049052727
 GameObject:
   m_ObjectHideFlags: 0
