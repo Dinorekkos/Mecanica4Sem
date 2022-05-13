@@ -134,7 +134,7 @@ public class Canion : MonoBehaviour
 
         canionDirection = (place1.transform.position - place2.transform.position).normalized;
 
-        Debug.DrawRay(canionPos, canionDirection);
+        // Debug.DrawRay(canionPos, canionDirection);
 
         ThrowObject();
     }

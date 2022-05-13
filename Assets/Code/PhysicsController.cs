@@ -26,7 +26,7 @@ public class PhysicsController : MonoBehaviour
 
     }
 
-    public void ApplyGravityToObject(Transform myTransform, Vector3 speedDir)
+    public void ApplySpeedToObject(Transform myTransform, Vector3 speedDir)
     {
         myTransform.position += -speedDir; 
     }
@@ -42,10 +42,10 @@ public class PhysicsController : MonoBehaviour
         }
         else
         {
+            Debug.Log("Is grounded");
             //Change para drag 
-            // speedVelocity = Vector3.zero;
-            speedVelocity = placeGravDir.normalized * 0.1f;
-
+            speedVelocity = Vector3.zero;
+            // speedVelocity = placeGravDir.normalized * 0.1f;
         }
         
         return speedVelocity;
@@ -61,9 +61,24 @@ public class PhysicsController : MonoBehaviour
     }
     
     public Vector3 ApplyFrictionForce(){
-
-        Vector3 friction = -speedVelocity * 0.5f;
-        speedVelocity = friction ;
+       
+        float mu = 1;
+        // Vector3 friction = -speedVelocity * 0.5f;
+        
+        Vector3 normalized = new Vector3(speedVelocity.x,speedVelocity.y,speedVelocity.z).normalized;
+        
+        Vector3 friction = -1 * mu * (myMass * MyGravity) * normalized;
+        
+        if (friction.magnitude < speedVelocity.magnitude)
+        {
+            speedVelocity = Vector3.zero;
+        }
+        else
+        {
+            speedVelocity += friction;
+        }
+        Debug.Log("Friction magnitude " + friction.magnitude);
+        Debug.Log("Speed magnitude " + speedVelocity.magnitude);
         return speedVelocity;
     }
 

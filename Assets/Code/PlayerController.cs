@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
     public bool isJumping;
     public bool isGrounded;
 
-    public bool isFrictioning = false;
     public bool isDragging;
     
     bool canThrow = false;
@@ -68,12 +67,16 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
+                // if (!isGrounded)
+                // {
+                    speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
+                // }
                 
                 isGrounded = _raycastGround();
                 
                 if (isGrounded)
                 {
+                    MyphysicsController.ApplyFrictionForce();
                     canJump = true;
                 }
                 else
@@ -83,12 +86,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
             
-            //Movement Player
-            MovePlayer();
-
-           
-
-        
             if(canion!=null)
             {
                 canThrow = canion.CanThrow;
@@ -101,13 +98,14 @@ public class PlayerController : MonoBehaviour
             }
            
            //Quitar is gropunded
-            if(!canThrow && !isGrounded)
+            if(!canThrow)
             {
-                MyphysicsController.ApplyGravityToObject(transform, speedVelocity); 
+                MyphysicsController.ApplySpeedToObject(transform, speedVelocity); 
                //Stop gravity if object is in the canion
             }
 
-            
+            //Movement Player
+            MovePlayer();
             
             
             //Align rotation player with the planet gravity
@@ -146,7 +144,7 @@ public class PlayerController : MonoBehaviour
 public void ReceiveInput(Vector2 myInput)
     {
         //Quitar speed velocity despues hahah
-        moveInput = (myInput * speedVelocity) * Time.deltaTime * velocityMovement;
+        moveInput = (myInput )* Time.deltaTime * velocityMovement;
     }
     
 
@@ -217,11 +215,7 @@ public void ReceiveInput(Vector2 myInput)
             canion.SetObjectToThrow(this.gameObject, speedVelocity, MyphysicsController, mass);
         }
 
-        if(other.CompareTag("FrictionZone"))
-        {
-            isFrictioning = true;
-            StartCoroutine("FrictionInPlayer");
-        }
+       
         if (other.CompareTag("DragZone"))
         {
             isDragging = true;
@@ -240,29 +234,14 @@ public void ReceiveInput(Vector2 myInput)
                 
             }
         }
-        if(other.CompareTag("FrictionZone"))
-        {
-             isFrictioning = false;
-             StopCoroutine("FrictionInPlayer");
-        }
-
+        
         if (other.CompareTag("DragZone"))
         {
             isDragging = false;
             StopCoroutine("DragInPlayer");
         }
     }
-
-    IEnumerator FrictionInPlayer()
-    {
-        while (isFrictioning)
-        {
-            speedVelocity = MyphysicsController.ApplyFrictionForce();
-            yield return null;
-
-        }
-    }
-
+    
     IEnumerator DragInPlayer()
     {
         while (isDragging)
