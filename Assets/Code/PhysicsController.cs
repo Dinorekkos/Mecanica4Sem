@@ -44,7 +44,7 @@ public class PhysicsController : MonoBehaviour
         {
             Debug.Log("Is grounded");
             //Change para drag 
-            // speedVelocity = Vector3.zero;
+            speedVelocity = Vector3.zero;
             // speedVelocity = placeGravDir.normalized * 0.1f;
         }
         
@@ -62,7 +62,7 @@ public class PhysicsController : MonoBehaviour
     
     public Vector3 ApplyFrictionForce(){
        
-        float mu = 10;
+        float mu = 1;
         // Vector3 friction = -speedVelocity * 0.5f;
         
         Vector3 normalized = new Vector3(speedVelocity.x,speedVelocity.y,speedVelocity.z).normalized;
@@ -72,14 +72,13 @@ public class PhysicsController : MonoBehaviour
         if (friction.magnitude < speedVelocity.magnitude)
         {
             speedVelocity = Vector3.zero;
-            
         }
         else
         {
             speedVelocity += friction;
         }
-        Debug.Log(friction.magnitude);
-        Debug.Log(speedVelocity.magnitude);
+        Debug.Log("Friction magnitude " + friction.magnitude);
+        Debug.Log("Speed magnitude " + speedVelocity.magnitude);
         return speedVelocity;
     }
 

@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
     public bool isJumping;
     public bool isGrounded;
 
-    public bool isFrictioning = false;
     public bool isDragging;
     
     bool canThrow = false;
@@ -68,10 +67,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (!isGrounded)
-                {
+                // if (!isGrounded)
+                // {
                     speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
-                }
+                // }
                 
                 isGrounded = _raycastGround();
                 
@@ -145,7 +144,7 @@ public class PlayerController : MonoBehaviour
 public void ReceiveInput(Vector2 myInput)
     {
         //Quitar speed velocity despues hahah
-        moveInput = (myInput * speedVelocity) * Time.deltaTime * velocityMovement;
+        moveInput = (myInput )* Time.deltaTime * velocityMovement;
     }
     
 
@@ -216,12 +215,7 @@ public void ReceiveInput(Vector2 myInput)
             canion.SetObjectToThrow(this.gameObject, speedVelocity, MyphysicsController, mass);
         }
 
-        if(other.CompareTag("FrictionZone"))
-        {
-            isFrictioning = true;
-            // Debug.Log("Se le aplica friction");
-            // StartCoroutine("FrictionInPlayer");
-        }
+       
         if (other.CompareTag("DragZone"))
         {
             isDragging = true;
@@ -240,29 +234,14 @@ public void ReceiveInput(Vector2 myInput)
                 
             }
         }
-        if(other.CompareTag("FrictionZone"))
-        {
-             isFrictioning = false;
-             // StopCoroutine("FrictionInPlayer");
-        }
-
+        
         if (other.CompareTag("DragZone"))
         {
             isDragging = false;
             StopCoroutine("DragInPlayer");
         }
     }
-
-    IEnumerator FrictionInPlayer()
-    {
-        while (isFrictioning)
-        {
-            speedVelocity = MyphysicsController.ApplyFrictionForce();
-            yield return null;
-
-        }
-    }
-
+    
     IEnumerator DragInPlayer()
     {
         while (isDragging)
