@@ -68,10 +68,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // if (!isGrounded)
-                // {
+                if (!isGrounded)
+                {
                     speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
-                // }
+                }
                 
                 isGrounded = _raycastGround();
                 
