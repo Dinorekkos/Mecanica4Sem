@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
                 
                 if (isGrounded)
                 {
+                    MyphysicsController.ApplyFrictionForce();
                     canJump = true;
                 }
                 else
@@ -218,7 +219,8 @@ public void ReceiveInput(Vector2 myInput)
         if(other.CompareTag("FrictionZone"))
         {
             isFrictioning = true;
-            StartCoroutine("FrictionInPlayer");
+            // Debug.Log("Se le aplica friction");
+            // StartCoroutine("FrictionInPlayer");
         }
         if (other.CompareTag("DragZone"))
         {
@@ -241,7 +243,7 @@ public void ReceiveInput(Vector2 myInput)
         if(other.CompareTag("FrictionZone"))
         {
              isFrictioning = false;
-             StopCoroutine("FrictionInPlayer");
+             // StopCoroutine("FrictionInPlayer");
         }
 
         if (other.CompareTag("DragZone"))

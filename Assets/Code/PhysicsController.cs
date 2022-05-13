@@ -44,7 +44,7 @@ public class PhysicsController : MonoBehaviour
         {
             //Change para drag 
             // speedVelocity = Vector3.zero;
-            // speedVelocity = placeGravDir.normalized * 0.1f;
+            speedVelocity = placeGravDir.normalized * 0.1f;
         }
         
         return speedVelocity;
@@ -60,9 +60,25 @@ public class PhysicsController : MonoBehaviour
     }
     
     public Vector3 ApplyFrictionForce(){
-
-        Vector3 friction = -speedVelocity * 0.5f;
-        speedVelocity = friction ;
+       
+        float mu = 10;
+        // Vector3 friction = -speedVelocity * 0.5f;
+        
+        Vector3 normalized = new Vector3(speedVelocity.x,speedVelocity.y,speedVelocity.z).normalized;
+        
+        Vector3 friction = -1 * mu * (myMass * MyGravity) * normalized;
+        
+        if (friction.magnitude < speedVelocity.magnitude)
+        {
+            speedVelocity = Vector3.zero;
+            
+        }
+        else
+        {
+            speedVelocity += friction;
+        }
+        Debug.Log(friction.magnitude);
+        Debug.Log(speedVelocity.magnitude);
         return speedVelocity;
     }
 
