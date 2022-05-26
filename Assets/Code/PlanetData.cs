@@ -7,6 +7,7 @@ public class PlanetData : MonoBehaviour
 
     [SerializeField] private float planetGravity;
     [SerializeField] private float planetRadius = 5f;
+    [SerializeField] public GameObject[] SpawnPlaces;
 
     public float PlanetGravity
     {

@@ -221,6 +221,13 @@ public void ReceiveInput(Vector2 myInput)
             isDragging = true;
             StartCoroutine("DragInPlayer");
         }
+
+        if (other.CompareTag("Point"))
+        {
+            Debug.Log("PLayer got 1 point");
+        }
+        
+        
     }
     
     private void OnTriggerExit(Collider other)

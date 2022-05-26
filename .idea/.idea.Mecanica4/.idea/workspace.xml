@@ -11,10 +11,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Code/PointsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d3b66f0ad4e34a55b6ef91ab8487819313c000/d4/623cb81c/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/Canion.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Point.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e99ee6d5c9684510a35b84c7173649f918000/90/58a2067b/RaycastHit.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/InputController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d3b66f0ad4e34a55b6ef91ab8487819313c000/3f/2fb0fd5c/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="262jtBrVEvbIkEzP6W0yxM4auNC" />
   <component name="ProjectViewState">
@@ -77,6 +80,7 @@
       <workItem from="1652315469383" duration="574000" />
       <workItem from="1652316211150" duration="7514000" />
       <workItem from="1652397138021" duration="5701000" />
+      <workItem from="1653524026992" duration="5639000" />
     </task>
     <servers />
   </component>

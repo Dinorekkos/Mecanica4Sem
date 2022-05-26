@@ -9,6 +9,7 @@ TagManager:
   - Canion
   - FrictionZone
   - DragZone
+  - Point
   layers:
   - Default
   - TransparentFX
