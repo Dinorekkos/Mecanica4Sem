@@ -10,6 +10,7 @@ TagManager:
   - FrictionZone
   - DragZone
   - Point
+  - Col
   layers:
   - Default
   - TransparentFX

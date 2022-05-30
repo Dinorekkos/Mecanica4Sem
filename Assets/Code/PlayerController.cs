@@ -239,8 +239,10 @@ public void ReceiveInput(Vector2 myInput)
         {
             Debug.Log("PLayer got 1 point");
         }
-        
-        
+
+    
+
+
     }
     
     private void OnTriggerExit(Collider other)

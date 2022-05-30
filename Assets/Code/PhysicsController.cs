@@ -6,10 +6,12 @@ public class PhysicsController : MonoBehaviour
     // gravity 9.81
     private float MyGravity = 1;
     private float myMass;
+    public bool isColliding;
     public Vector3 gravDirection;
     public Vector3 dirMagnitud;
     private Vector3 acceleration;
     private Vector3 speedVelocity;
+
 
    
     public PhysicsController(float _gravity, Vector3 _speedVelocity, float _mass)
@@ -94,5 +96,12 @@ public class PhysicsController : MonoBehaviour
         return speedVelocity;
     }
     
+
+    public Vector3 ApplyCollisionForce()
+    {
+
+
+        return speedVelocity;
+    }
 
 }
