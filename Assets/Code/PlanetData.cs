@@ -7,7 +7,6 @@ public class PlanetData : MonoBehaviour
 
     [SerializeField] private float planetGravity;
     [SerializeField] private float planetRadius = 5f;
-    [SerializeField] public GameObject[] SpawnPlaces;
 
     public float PlanetGravity
     {
@@ -20,22 +19,8 @@ public class PlanetData : MonoBehaviour
         
     
     }
+    
+    
 
-
-    public void CheckPlanetGround()
-    {
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 }

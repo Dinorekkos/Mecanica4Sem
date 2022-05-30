@@ -1,30 +1,68 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+using UnityEngine.InputSystem;
 
 public class PointsController : MonoBehaviour
 {
+    public static PointsController Instance;
     private PlanetData _planetData;
-    private Transform[] _places;
-    
-    // Start is called before the first frame update
+    public Transform[] _places;
+    public Point[] _points;
+    private Keyboard keyboard;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
-        _planetData = GetComponent<PlanetData>();
+#if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_STANDALONE_LINUX || UNITY_EDITOR
+        keyboard = Keyboard.current;
+#endif
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (keyboard.mKey.wasPressedThisFrame)
+        {
+            MovePoints();
+        }
     }
 
-    private void GetSpawnPlaces()
+    void MovePoints()
+    {
+        for (int x = 0; x < _points.Length; x++)
+        {
+            Point point = _points[x].gameObject.GetComponent<Point>();
+            point.MovePoint(GetRandomPos());
+        }
+
+    }
+
+    private Vector3 GetRandomPos()
     {
         
+        int random = Random.Range(0, _places.Length);
+        // int previewRandom = 0;
+        //
+        // if (random == previewRandom)
+        // {
+        //     random++;
+        //     if (random >= _places.Length)
+        //     {
+        //         random = 0;
+        //     }
+        //     
+        //     
+        // }
+        //
+        // previewRandom = random;
+        Vector3 position = new Vector3(_places[random].transform.position.x,_places[random].transform.position.y, _places[random].transform.position.z );
+        
+        
+        return position;
     }
-    
-    
-    
-    
 }

@@ -105,18 +105,9 @@ public class Canion : MonoBehaviour
                 timeThrowing = 0;
                 
             }
-
-            // Debug.Log("Throw Object to direction" + canionDirection);
-
+            
         }
-        else
-        {
-            // Debug.Log("Finish Throwing object");
-
-            // selectedObject = null;
-        }
-
-
+        
     }
 
     public Vector3 ApplyCanionThrow() {
@@ -124,17 +115,14 @@ public class Canion : MonoBehaviour
         return speed;
     }
 
-    // Update is called once per frame
     void Update()
     {
         canionPos = this.gameObject.transform.position;
         canionRotation = this.gameObject.transform.rotation;
 
-        //canionDirection = canionRotation.eulerAngles;
 
         canionDirection = (place1.transform.position - place2.transform.position).normalized;
 
-        // Debug.DrawRay(canionPos, canionDirection);
 
         ThrowObject();
     }

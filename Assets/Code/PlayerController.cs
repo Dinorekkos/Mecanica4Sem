@@ -40,9 +40,11 @@ public class PlayerController : MonoBehaviour
     bool canThrow = false;
     private bool isThrowing = false;
 
-     PlanetData planetData;
+    private bool gameHasStarted = false;
 
-     public Vector3 placeToMove;
+    PlanetData planetData;
+
+     private Vector3 placeToMove;
 
     void Start()
     {
@@ -56,8 +58,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         if (active)
         {
+            gameHasStarted = GameController.Instance.GameStarted;
             MyphysicsController.GetGameObjectData(speedVelocity, MyGravity);
             
             //Receive gravity from the planet
@@ -94,18 +98,27 @@ public class PlayerController : MonoBehaviour
                 {
                     speedVelocity = canion.ApplyCanionThrow();
                 }
-                
             }
            
-           //Quitar is gropunded
+            //Quitar is gropunded
             if(!canThrow)
             {
-                MyphysicsController.ApplySpeedToObject(transform, speedVelocity); 
-               //Stop gravity if object is in the canion
+                if (gameHasStarted)
+                {
+                    MyphysicsController.ApplySpeedToObject(transform, speedVelocity);
+                }
+                else
+                {
+                    speedVelocity = Vector3.zero;
+                } 
+                //Stop gravity if object is in the canion
             }
 
             //Movement Player
-            MovePlayer();
+            if (gameHasStarted)
+            {
+                MovePlayer();
+            }
             
             
             //Align rotation player with the planet gravity
@@ -121,7 +134,7 @@ public class PlayerController : MonoBehaviour
         if (planetData != null)
         {
             float offsetPlayer = 0.5f;
-            float distanceToPlanetCenter = MyphysicsController.dirMagnitud.magnitude ;
+            float distanceToPlanetCenter = MyphysicsController.dirMagnitud.magnitude;
             //if Player Is inside the planet ground move player to the top ground
             if (distanceToPlanetCenter <= planetData.PlanetRadius + offsetPlayer)
             {
@@ -251,8 +264,10 @@ public void ReceiveInput(Vector2 myInput)
     
     IEnumerator DragInPlayer()
     {
+        
         while (isDragging)
         {
+            
             speedVelocity = MyphysicsController.ApplyDragginForce();
             yield return null;
         }

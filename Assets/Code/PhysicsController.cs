@@ -77,8 +77,8 @@ public class PhysicsController : MonoBehaviour
         {
             speedVelocity += friction;
         }
-        // Debug.Log("Friction magnitude " + friction.magnitude);
         // Debug.Log("Speed magnitude " + speedVelocity.magnitude);
+        
         return speedVelocity;
     }
 
