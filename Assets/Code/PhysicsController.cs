@@ -31,8 +31,9 @@ public class PhysicsController : MonoBehaviour
     public void ApplySpeedToObject(Transform myTransform, Vector3 speedDir)
     {
         myTransform.position += -speedDir; 
+        // myTransform.position -= speedDir; 
     }
-    public Vector3 SendGravityPlanetToObject(bool isGrounded, Transform myGameObject, Transform planetPos, Vector3 placeGravDir)
+    public Vector3 SendGravityPlanetToObject(bool isGrounded, Transform myGameObject, Transform planetPos)
     {
 
         gravDirection = (myGameObject.transform.position - planetPos.transform.position).normalized;
@@ -91,7 +92,8 @@ public class PhysicsController : MonoBehaviour
         float dragArea = 1;
         
         float dragNormal = Mathf.Sqrt((speedVelocity.x * speedVelocity.x) + (speedVelocity.y * speedVelocity.y) + (speedVelocity.z * speedVelocity.z));
-        speedVelocity += -0.5f * density * dragNormal * coeficentDrag * dragArea * speedVelocity;
+        // speedVelocity += -0.5f * density * dragNormal * coeficentDrag * dragArea * speedVelocity;
+        speedVelocity += -0.1f * density * dragNormal * coeficentDrag * dragArea * speedVelocity;
         
         return speedVelocity;
     }

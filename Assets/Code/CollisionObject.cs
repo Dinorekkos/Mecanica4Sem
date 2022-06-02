@@ -29,7 +29,7 @@ public class CollisionObject : MonoBehaviour
 
         MyphysicsController.GetGameObjectData(speedVelocity, MyGravity);
 
-        speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
+        speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
 
         isGrounded = _raycastGround();
         if(isGrounded)

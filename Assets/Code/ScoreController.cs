@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
+    public static ScoreController Instance;
     public Text scoreTxt;
 
     private int playerScore;
@@ -16,17 +18,15 @@ public class ScoreController : MonoBehaviour
    
     void Start()
     {
-        
+        Instance = this;
     }
-
-    void Update()
-    {
-        
-    }
-
+    
     public void UpdatePoints()
     {
-        playerScore = playerScore++;
+        int i = 1;
+        playerScore = playerScore + i;
         scoreTxt.text = PlayerScore.ToString();
+        Debug.Log(playerScore);
+
     }
 }

@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -72,8 +70,8 @@ public class PlayerController : MonoBehaviour
             else
             {
                 // if (!isGrounded)
-                // {
-                    speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet, placeToMove);
+                // 
+                    speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
                 // }
                 
                 isGrounded = _raycastGround();
@@ -99,25 +97,24 @@ public class PlayerController : MonoBehaviour
                     speedVelocity = canion.ApplyCanionThrow();
                 }
             }
-           
-            //Quitar is gropunded
-            if(!canThrow)
-            {
-                if (gameHasStarted)
-                {
-                    MyphysicsController.ApplySpeedToObject(transform, speedVelocity);
-                }
-                else
-                {
-                    speedVelocity = Vector3.zero;
-                } 
-                //Stop gravity if object is in the canion
-            }
+            
 
             //Movement Player
             if (gameHasStarted)
             {
                 MovePlayer();
+            }
+            
+            if(!canThrow)
+            {
+                if (gameHasStarted)
+                {
+                    MyphysicsController.ApplySpeedToObject(this.transform, speedVelocity);
+                }
+                else
+                {
+                    speedVelocity = Vector3.zero;
+                } 
             }
             
             
@@ -154,7 +151,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-public void ReceiveInput(Vector2 myInput)
+    public void ReceiveInput(Vector2 myInput)
     {
         //Quitar speed velocity despues hahah
         moveInput = (myInput )* Time.deltaTime * velocityMovement;
@@ -237,12 +234,13 @@ public void ReceiveInput(Vector2 myInput)
 
         if (other.CompareTag("Point"))
         {
-            Debug.Log("PLayer got 1 point");
+            Debug.Log("PLayer got a point");
+            Point point = other.GetComponent<Point>();
+            point.HandleState(!active);
+            ScoreController.Instance.UpdatePoints();
+            
         }
-
-    
-
-
+        
     }
     
     private void OnTriggerExit(Collider other)
@@ -266,12 +264,10 @@ public void ReceiveInput(Vector2 myInput)
     
     IEnumerator DragInPlayer()
     {
-        
         while (isDragging)
         {
-            
             speedVelocity = MyphysicsController.ApplyDragginForce();
-            yield return null;
+            yield return speedVelocity;
         }
 
     }

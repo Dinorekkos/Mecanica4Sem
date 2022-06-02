@@ -9,7 +9,13 @@ public class GameController : MonoBehaviour
     public static GameController Instance;
 
     private bool _gameStarted = false;
+    private bool _gameFinished = false;
 
+    public bool GameFinished
+    {
+        get { return _gameFinished; }
+        set { _gameFinished = value; }
+    }
     public bool GameStarted
     {
         get { return _gameStarted; }
@@ -20,6 +26,17 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         GameStarted = true;
+        TimerManager.Instance.StartTimer();
+        MyTimer.Instance.StartTimer();
+        
+    }
+
+    public void EndGame()
+    {
+        GameFinished = true;
+        GameStarted = false;
+        TimerManager.Instance.StopTimer();
+        
     }
     
     

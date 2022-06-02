@@ -11,7 +11,6 @@ public class PointsController : MonoBehaviour
     private PlanetData _planetData;
     public Transform[] _places;
     public Point[] _points;
-    private Keyboard keyboard;
     private void Awake()
     {
         Instance = this;
@@ -19,24 +18,24 @@ public class PointsController : MonoBehaviour
 
     void Start()
     {
-#if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_STANDALONE_LINUX || UNITY_EDITOR
-        keyboard = Keyboard.current;
-#endif
+        MyTimer.Instance.OnTimerFinished += MovePoints;
     }
 
-    private void Update()
-    {
-        if (keyboard.mKey.wasPressedThisFrame)
-        {
-            MovePoints();
-        }
-    }
+    // private void Update()
+    // {
+    //     // if (keyboard.mKey.wasPressedThisFrame)
+    //     // {
+    //     //     MovePoints();
+    //     // }
+    // }
 
     void MovePoints()
     {
+        Debug.Log("<color=#7FF5FF>Se llama MovePoints onTimerFinished</color>");
         for (int x = 0; x < _points.Length; x++)
         {
             Point point = _points[x].gameObject.GetComponent<Point>();
+            point.HandleState(true);
             point.MovePoint(GetRandomPos());
         }
 

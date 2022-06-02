@@ -11,6 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Code/MyTimer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/PointsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d3b66f0ad4e34a55b6ef91ab8487819313c000/d4/623cb81c/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/Canion.cs" root0="FORCE_HIGHLIGHTING" />
@@ -83,6 +84,8 @@
       <workItem from="1652397138021" duration="5701000" />
       <workItem from="1653524026992" duration="5639000" />
       <workItem from="1653850549710" duration="12430000" />
+      <workItem from="1654119200352" duration="142000" />
+      <workItem from="1654119909303" duration="10874000" />
     </task>
     <servers />
   </component>
