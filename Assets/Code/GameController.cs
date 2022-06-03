@@ -5,38 +5,59 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-
+    
+    
     public static GameController Instance;
 
+    public GameObject canvasFinishedGame;
     private bool _gameStarted = false;
-    private bool _gameFinished = false;
+    
+    public gameStates GameStates;
 
-    public bool GameFinished
+    public enum gameStates
     {
-        get { return _gameFinished; }
-        set { _gameFinished = value; }
+        None,
+        GameStarted,
+        GameFinished,
     }
-    public bool GameStarted
-    {
-        get { return _gameStarted; }
-        set { _gameStarted = value; }
-    }
-
-    public event Action OnstartGame;
+    
     public void StartGame()
     {
-        GameStarted = true;
+        GameStates = gameStates.GameStarted;
         TimerManager.Instance.StartTimer();
         MyTimer.Instance.StartTimer();
+        
+        HandleGameState();
         
     }
 
     public void EndGame()
     {
-        GameFinished = true;
-        GameStarted = false;
-        TimerManager.Instance.StopTimer();
+        GameStates = gameStates.GameFinished;
+        MyTimer.Instance.StopTimer();
+        Debug.Log("GameFinished");
         
+        HandleGameState();
+
+    }
+
+    private void HandleGameState()
+    {
+        switch (GameStates)
+        {
+            case gameStates.None:
+                canvasFinishedGame.SetActive(false);
+
+                break;
+            case gameStates.GameStarted:
+                canvasFinishedGame.SetActive(false);
+                break;
+            case gameStates.GameFinished :
+                canvasFinishedGame.SetActive(true);
+
+                break;
+                
+        }
     }
     
     
@@ -47,21 +68,12 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        _gameStarted = false;
+        TimerManager.Instance.OnFinishTimer += EndGame;
+        GameStates = gameStates.None;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    void HandleGameCondition()
-    {
-        
-    }
 
-    
-    
-    
+
+
 }

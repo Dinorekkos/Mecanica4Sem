@@ -13,8 +13,12 @@ public class TimerManager : MonoBehaviour
     public int startMinutes;
     public Text txtTimer;
     public Image imageUI;
+    public Image imageGO;
+
+    public GameObject panelCountDown;
     public Sprite[] countDown;
 
+    public event Action OnFinishTimer;
     private void Awake()
     {
         Instance = this;
@@ -22,6 +26,8 @@ public class TimerManager : MonoBehaviour
 
     void Start()
     {
+        panelCountDown.SetActive(true);
+        imageGO.gameObject.SetActive(false);
         StartCoroutine(StartCountDown());
         currentTime = startMinutes * 60;
     }
@@ -33,14 +39,13 @@ public class TimerManager : MonoBehaviour
             currentTime = currentTime - Time.deltaTime;
             if (currentTime <= 0)
             {
-                timerActive = false;
-                currentTime = startMinutes * 60;
+                StopTimer();
             }
         }
 
         
         TimeSpan timeSpan = TimeSpan.FromSeconds(currentTime);
-        txtTimer.text = timeSpan.Minutes + ":" + timeSpan.Seconds;
+        txtTimer.text = "0"+ timeSpan.Minutes + ":" + timeSpan.Seconds;
     }
     
     IEnumerator StartCountDown()
@@ -51,9 +56,15 @@ public class TimerManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         imageUI.sprite = countDown[0];
         yield return new WaitForSeconds(1);
+        imageGO.gameObject.SetActive(true);       
+        imageUI.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.8f);
+
+
 
         imageUI.sprite = null;
-        imageUI.gameObject.SetActive(false);
+        panelCountDown.SetActive(false);
+        imageGO.gameObject.SetActive(false);
         GameController.Instance.StartGame();
     }
 
@@ -66,6 +77,7 @@ public class TimerManager : MonoBehaviour
     public void StopTimer()
     {
         timerActive = false;
+        OnFinishTimer?.Invoke();
     }
    
     

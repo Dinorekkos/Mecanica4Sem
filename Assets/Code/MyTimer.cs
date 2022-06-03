@@ -31,7 +31,7 @@ public class MyTimer : MonoBehaviour
             currentTime = currentTime - Time.deltaTime;
             if (currentTime <= 0)
             {
-                StopTimer();
+                RestartTimer();
             }
         }
     }
@@ -41,13 +41,20 @@ public class MyTimer : MonoBehaviour
         timerActive = true;
     }
 
-    public void StopTimer()
+    public void RestartTimer()
     {
         timerActive = false;
         currentTime = startSeconds * 60;
         StartTimer();
-        OnTimerFinished.Invoke();
+        OnTimerFinished?.Invoke();
     }
+
+    public void StopTimer()
+    {
+        timerActive = false;
+    }
+    
+    
     
     
     

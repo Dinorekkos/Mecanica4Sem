@@ -69,7 +69,7 @@ public class Canion : MonoBehaviour
     
     public void ThrowObject()
     {
-        Vector3 force = canionDirection  * 100f;
+        Vector3 force = canionDirection  * 200f;
         Vector3 acceleration = Vector3.zero; ;
 
         if (CanThrow)

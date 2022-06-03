@@ -8,6 +8,7 @@ public class ScoreController : MonoBehaviour
 {
     public static ScoreController Instance;
     public Text scoreTxt;
+    public Text scoreFinal;
 
     private int playerScore;
 
@@ -26,7 +27,11 @@ public class ScoreController : MonoBehaviour
         int i = 1;
         playerScore = playerScore + i;
         scoreTxt.text = PlayerScore.ToString();
-        Debug.Log(playerScore);
+        if (scoreFinal)
+        {
+            scoreFinal.text = PlayerScore.ToString();
+        }
+        // Debug.Log(playerScore);
 
     }
 }

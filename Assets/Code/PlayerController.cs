@@ -18,14 +18,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject myGroundCheck;
 
-    [SerializeField] private float jumpForce = 100f;
+    [SerializeField] private float jumpForce = 10f;
 
 
     private PhysicsController MyphysicsController;
     private Vector2 moveInput;
     private Keyboard keyboard;
     private float timeJumping = 0f;
-    private float maxTimeJump = 0.05f;
+    private float maxTimeJump = 0.02f;
 
     Canion canion;
     private bool active;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     PlanetData planetData;
 
      private Vector3 placeToMove;
-
+     private GameController.gameStates _GameStates;
     void Start()
     {
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_STANDALONE_LINUX || UNITY_EDITOR
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
         if (active)
         {
-            gameHasStarted = GameController.Instance.GameStarted;
+            _GameStates = GameController.Instance.GameStates;
             MyphysicsController.GetGameObjectData(speedVelocity, MyGravity);
             
             //Receive gravity from the planet
@@ -100,14 +100,14 @@ public class PlayerController : MonoBehaviour
             
 
             //Movement Player
-            if (gameHasStarted)
+            if (_GameStates == GameController.gameStates.GameStarted)
             {
                 MovePlayer();
             }
             
             if(!canThrow)
             {
-                if (gameHasStarted)
+                if (_GameStates == GameController.gameStates.GameStarted)
                 {
                     MyphysicsController.ApplySpeedToObject(this.transform, speedVelocity);
                 }
