@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : ColData
 {
     [Header("Physics")] [SerializeField] private float MyGravity = 9.81f;
     [SerializeField] 
@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player")] [SerializeField] private float velocityMovement = 1;
 
-    [SerializeField] private float mass = 2;
+    [SerializeField] public float mass = 2;
 
     [SerializeField] public Vector3 speedVelocity;
 
@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
                     speedVelocity = Vector3.zero;
                 } 
             }
-            
             
             //Align rotation player with the planet gravity
             Quaternion toRotation = Quaternion.FromToRotation(transform.up, MyphysicsController.gravDirection) * transform.rotation;

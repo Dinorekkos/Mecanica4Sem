@@ -31,7 +31,7 @@ public class PointsController : MonoBehaviour
 
     void MovePoints()
     {
-        Debug.Log("<color=#7FF5FF>Se llama MovePoints onTimerFinished</color>");
+        // Debug.Log("<color=#7FF5FF>Se llama MovePoints onTimerFinished</color>");
         for (int x = 0; x < _points.Length; x++)
         {
             Point point = _points[x].gameObject.GetComponent<Point>();

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionObject : MonoBehaviour
+public class CollisionObject : ColData
 {
     private PhysicsController MyphysicsController;
     public Transform currentPlanet = null;
@@ -13,6 +13,7 @@ public class CollisionObject : MonoBehaviour
 
     public Vector3 speedVelocity;
     private Vector3 placeToMove;
+
 
 
     public bool isGrounded;
