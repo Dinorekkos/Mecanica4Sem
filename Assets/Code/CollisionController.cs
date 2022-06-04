@@ -5,6 +5,8 @@ using UnityEngine;
 public class CollisionController : MonoBehaviour
 {
     public GameObject[] collisionObjects;
+
+    private bool isApplyingCol;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +17,7 @@ public class CollisionController : MonoBehaviour
     void Update()
     {
         MeasureDistance();
+        
     }
 
     void MeasureDistance()
@@ -22,32 +25,28 @@ public class CollisionController : MonoBehaviour
 
         foreach (GameObject objectTransform in collisionObjects)
         {
-            float distance = 0;
-
             foreach (GameObject otherTransform in collisionObjects)
             {
                 if (otherTransform.name != objectTransform.name)
                 {
+                    float distance = 0;
                     distance = Mathf.Sqrt( Mathf.Pow((objectTransform.transform.position.x - otherTransform.transform.position.x),2) +
                                             Mathf.Pow((objectTransform.transform.position.y - otherTransform.transform.position.y),2) + 
                                             Mathf.Pow((objectTransform.transform.position.z - otherTransform.transform.position.z),2));
 
                     if (distance <= 1)
                     {
-                        // if (objectTransform.GetComponent<PlayerController>())
-                        // {
-                        //     PlayerController playerController = objectTransform.GetComponent<PlayerController>();
-                        //     Vector3 speedVelocity = playerController.speedVelocity;
-                        //     float mass = playerController.mass;
-                        // }
-                        // else if(objectTransform.GetComponent<>())
-                        Debug.Log("<color=#E87FFF>Collison between =  </color>" + otherTransform.name+ " " + objectTransform.name +" " + distance);
+                        CollisionObject col1 = otherTransform.gameObject.GetComponent<CollisionObject>();
+                        CollisionObject col2 = otherTransform.gameObject.GetComponent<CollisionObject>();
+                        
+                        ApplyCollisionForces(col1.speedVelocity, col2.speedVelocity, col1.mass, col2.mass,
+                            col1.transform, col2.transform);
+                        
+                        // Debug.Log("<color=#E87FFF>Collison between =  </color>" + otherTransform.name+ " " + objectTransform.name +" " + distance);
                     }
-                    else
+                    else if(distance > 1)
                     {
-                        // otherTransform.GetComponent<ColData>().isColliding = false;
-                        // objectTransform.GetComponent<ColData>().isColliding = false;
-                        Debug.Log("<color=#FF5751>NOOO COLLISION =  </color>");
+                        // Debug.Log("<color=#FF5751>NOOO COLLISION =  </color>");
                     }
                     
                 }
@@ -57,8 +56,10 @@ public class CollisionController : MonoBehaviour
     }
 
 
-    void ApplyCollisionForces(Vector3 speedVelocity, float mass, Transform objectToApply)
+    void ApplyCollisionForces(Vector3 speedVelocity1, Vector3 speed2, float mass1, float mass2, Transform object1, Transform object2)
     {
+        Debug.Log("<color=#E87FFF>APPLY COLLISION </color>" );
+
         
     }
 

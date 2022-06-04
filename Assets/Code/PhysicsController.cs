@@ -97,12 +97,8 @@ public class PhysicsController : MonoBehaviour
         return speedVelocity;
     }
     
-
-    public Vector3 ApplyCollisionForce()
-    {
-
-
-        return speedVelocity;
-    }
-
+    
+    
+    
+    
 }

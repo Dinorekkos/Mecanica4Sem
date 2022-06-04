@@ -511,6 +511,7 @@ GameObject:
   - component: {fileID: 332765628}
   - component: {fileID: 332765632}
   - component: {fileID: 332765633}
+  - component: {fileID: 332765634}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -609,6 +610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0f84ad4e696fb42aa5fc8c802c7c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isColliding: 0
   MyGravity: 0.1
   currentPlanet: {fileID: 0}
   velocityMovement: 10
@@ -620,7 +622,6 @@ MonoBehaviour:
   isJumping: 0
   isGrounded: 0
   isDragging: 0
-  isColliding: 0
 --- !u!114 &332765633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,6 +636,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerController: {fileID: 332765632}
   _canion: {fileID: 0}
+--- !u!114 &332765634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332765627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 527c2fab422ab8843ae4cad37a1c2ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isColliding: 0
+  PlayerController: {fileID: 332765632}
+  currentPlanet: {fileID: 0}
+  planetData: {fileID: 0}
+  isPlayerController: 1
+  mass: 1
+  speedVelocity: {x: 0, y: 0, z: 0}
+  isGrounded: 0
 --- !u!1 &333758493
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,7 +2520,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1199315590}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.43, y: 5.05, z: -2.33}
+  m_LocalPosition: {x: -31.43, y: 5.05, z: -2.973}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1043223591}
@@ -2517,10 +2538,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527c2fab422ab8843ae4cad37a1c2ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isColliding: 0
+  PlayerController: {fileID: 0}
   currentPlanet: {fileID: 1972220398}
   planetData: {fileID: 1972220397}
+  isPlayerController: 0
+  mass: 1
   speedVelocity: {x: 0, y: 0, z: 0}
-  isColliding: 0
   isGrounded: 0
 --- !u!135 &1199315593
 SphereCollider:
@@ -2737,7 +2761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357179111}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.43, y: 5.05, z: -0.28}
+  m_LocalPosition: {x: -30.4, y: 5.05, z: -1.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1043223591}
@@ -2755,10 +2779,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527c2fab422ab8843ae4cad37a1c2ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isColliding: 0
+  PlayerController: {fileID: 0}
   currentPlanet: {fileID: 1972220398}
   planetData: {fileID: 1972220397}
+  isPlayerController: 0
+  mass: 1
   speedVelocity: {x: 0, y: 0, z: 0}
-  isColliding: 0
   isGrounded: 0
 --- !u!135 &1357179114
 SphereCollider:
@@ -4200,10 +4227,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527c2fab422ab8843ae4cad37a1c2ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isColliding: 0
+  PlayerController: {fileID: 0}
   currentPlanet: {fileID: 1972220398}
   planetData: {fileID: 1972220397}
+  isPlayerController: 0
+  mass: 1
   speedVelocity: {x: 0, y: 0, z: 0}
-  isColliding: 0
   isGrounded: 0
 --- !u!135 &2007942105
 SphereCollider:
@@ -4275,7 +4305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2007942103}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -33.41, y: 4.07, z: -2.33}
+  m_LocalPosition: {x: -31.87, y: 4.58, z: -1.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1043223591}
