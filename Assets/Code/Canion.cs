@@ -17,6 +17,9 @@ public class Canion : MonoBehaviour
 
     //[SerializeField] private PlayerController player;
 
+    public float _FORCE = 200;
+
+
     private float massObject;
     private float timeThrowing;
     private float maxTimeThrowing = 0.05f;
@@ -69,7 +72,7 @@ public class Canion : MonoBehaviour
     
     public void ThrowObject()
     {
-        Vector3 force = canionDirection  * 200f;
+        Vector3 force = canionDirection  * _FORCE;
         Vector3 acceleration = Vector3.zero; ;
 
         if (CanThrow)

@@ -31,7 +31,8 @@ public class CollisionController : MonoBehaviour
                                             Mathf.Pow((objectTransform.transform.position.z - otherTransform.transform.position.z),2));
 
                     distanceVector = (objectTransform.transform.position - otherTransform.transform.position);
-                    if (distance <= 1)
+
+                    if (distance <= 1)//(distance <= (r1+r2))
                     {
                         CollisionObject col1 = otherTransform.gameObject.GetComponent<CollisionObject>();
                         CollisionObject col2 = otherTransform.gameObject.GetComponent<CollisionObject>();
@@ -66,8 +67,10 @@ public class CollisionController : MonoBehaviour
     {
         Debug.Log("<color=#E87FFF>APPLY COLLISION </color>");
 
-        float productOne = (speed1.x * distance.x) + (speed1.y * distance.y) + (speed1.z * distance.z);
-        float productTwo = (speed2.x * distance.x) + (speed2.y * distance.y) + (speed2.z * distance.z);
+        Vector3 distanceVN = distance.normalized; 
+
+        float productOne = (speed1.x * distanceVN.x) + (speed1.y * distanceVN.y) + (speed1.z * distanceVN.z);
+        float productTwo = (speed2.x * distanceVN.x) + (speed2.y * distanceVN.y) + (speed2.z * distanceVN.z);
 
         float prime = (((mass1 * productOne) + (mass2 * productTwo)) - ((mass2 * e) * (productOne - productTwo))) /
                          (mass1 + mass2);
@@ -92,21 +95,23 @@ public class CollisionController : MonoBehaviour
 
         return speed1;
     }
-    
-    Vector3 ApplyCollisionForces2(Vector3 speed1, Vector3 speed2, float mass1, float mass2, 
-      Vector3 distance)
+
+    Vector3 ApplyCollisionForces2(Vector3 speed1, Vector3 speed2, float mass1, float mass2,
+         Vector3 distance)
     {
         Debug.Log("<color=#E87FFF>APPLY COLLISION </color>");
 
-        float productOne = (speed1.x * distance.x) + (speed1.y * distance.y) + (speed1.z * distance.z);
-        float productTwo = (speed2.x * distance.x) + (speed2.y * distance.y) + (speed2.z * distance.z);
+        Vector3 distanceVN = distance.normalized;
+
+        float productOne = (speed1.x * distanceVN.x) + (speed1.y * distanceVN.y) + (speed1.z * distanceVN.z);
+        float productTwo = (speed2.x * distanceVN.x) + (speed2.y * distanceVN.y) + (speed2.z * distanceVN.z);
 
         float prime = (((mass1 * productOne) + (mass2 * productTwo)) - ((mass2 * e) * (productOne - productTwo))) /
-                      (mass1 + mass2);
+                         (mass1 + mass2);
 
         float acceleration1 = prime - productOne;
         float acceleration2 = (mass1 / mass2) * acceleration1;
-        
+
         Vector3 vPrime1 = productOne * distanceVector.normalized;
         Vector3 vPrime2 = productTwo * distanceVector.normalized;
 
