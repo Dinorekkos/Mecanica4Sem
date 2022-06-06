@@ -17,12 +17,12 @@ public class Canion : MonoBehaviour
 
     //[SerializeField] private PlayerController player;
 
-    public float _FORCE = 200;
+    private float _FORCE = 200;
 
 
     private float massObject;
     private float timeThrowing;
-    private float maxTimeThrowing = 0.05f;
+    public float maxTimeThrowing = 0.5f;
     private bool canThrowGO = false;
     private bool isthrowing = false;
     private Keyboard _keyboard;
