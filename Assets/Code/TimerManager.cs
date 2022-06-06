@@ -15,6 +15,7 @@ public class TimerManager : MonoBehaviour
     public Image imageUI;
     public Image imageGO;
 
+    public GameObject GameCanvas;
     public GameObject panelCountDown;
     public Sprite[] countDown;
 
@@ -26,6 +27,13 @@ public class TimerManager : MonoBehaviour
 
     void Start()
     {
+        
+    }
+
+
+    public void ButtonStartTimer()
+    {
+        GameCanvas.SetActive(true);
         panelCountDown.SetActive(true);
         imageGO.gameObject.SetActive(false);
         StartCoroutine(StartCountDown());

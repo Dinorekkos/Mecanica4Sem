@@ -39,7 +39,7 @@ public class CollisionObject : ColData
         {
             MyphysicsController.GetGameObjectData(speedVelocity, MyGravity);
 
-            speedVelocity = MyphysicsController.SendGravityPlanetToObject(isGrounded, transform, currentPlanet);
+            speedVelocity = MyphysicsController.SendGravityPlanetToObjectCol(isGrounded, transform, currentPlanet);
 
             isGrounded = _raycastGround();
             if(isGrounded)

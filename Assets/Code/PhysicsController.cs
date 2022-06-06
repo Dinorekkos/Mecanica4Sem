@@ -53,6 +53,20 @@ public class PhysicsController : MonoBehaviour
         return speedVelocity;
         
     }
+    public Vector3 SendGravityPlanetToObjectCol(bool isGrounded, Transform myGameObject, Transform planetPos)
+    {
+
+        gravDirection = (myGameObject.transform.position - planetPos.transform.position).normalized;
+        dirMagnitud = (myGameObject.transform.position - planetPos.transform.position);
+        
+        if(!isGrounded)
+        {
+            speedVelocity +=  gravDirection * (MyGravity * Time.deltaTime);
+        }
+        
+        return speedVelocity;
+        
+    }
 
     public Vector3 ApplyAccelerationUpToObject()
     {
