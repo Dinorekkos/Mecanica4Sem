@@ -17,7 +17,7 @@ public class Canion : MonoBehaviour
 
     //[SerializeField] private PlayerController player;
 
-    private float _FORCE = 200;
+  [SerializeField]  private float _FORCE = 200;
 
 
     private float massObject;
@@ -72,7 +72,7 @@ public class Canion : MonoBehaviour
     
     public void ThrowObject()
     {
-        Vector3 force = canionDirection  * _FORCE;
+        Vector3 force = canionDirection  * Mathf.Pow(_FORCE, 2);
         Vector3 acceleration = Vector3.zero; ;
 
         if (CanThrow)

@@ -188,6 +188,7 @@ public class PlayerController : ColData
         if (isJumping)
         {
             timeJumping += Time.deltaTime;
+            // Debug.Log(timeJumping);
 
             if (timeJumping < maxTimeJump)
             {
@@ -233,7 +234,6 @@ public class PlayerController : ColData
 
         if (other.CompareTag("Point"))
         {
-            Debug.Log("PLayer got a point");
             Point point = other.GetComponent<Point>();
             point.HandleState(!active);
             ScoreController.Instance.UpdatePoints();

@@ -65,8 +65,6 @@ public class CollisionController : MonoBehaviour
     Vector3 ApplyCollisionForces1(Vector3 speed1, Vector3 speed2, float mass1, float mass2,
         Vector3 distance)
     {
-        Debug.Log("<color=#E87FFF>APPLY COLLISION </color>");
-
         Vector3 distanceVN = distance.normalized; 
 
         float productOne = (speed1.x * distanceVN.x) + (speed1.y * distanceVN.y) + (speed1.z * distanceVN.z);
@@ -99,7 +97,6 @@ public class CollisionController : MonoBehaviour
     Vector3 ApplyCollisionForces2(Vector3 speed1, Vector3 speed2, float mass1, float mass2,
          Vector3 distance)
     {
-        Debug.Log("<color=#E87FFF>APPLY COLLISION </color>");
 
         Vector3 distanceVN = distance.normalized;
 

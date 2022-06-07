@@ -286,7 +286,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4724662382423136008, guid: 6062e6b0051e0e8459e61d2a47f67c27, type: 3}
       propertyPath: _FORCE
-      value: 1600
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724662382423136008, guid: 6062e6b0051e0e8459e61d2a47f67c27, type: 3}
+      propertyPath: maxTimeThrowing
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4724662382423136009, guid: 6062e6b0051e0e8459e61d2a47f67c27, type: 3}
       propertyPath: m_RootOrder
@@ -782,7 +786,7 @@ MonoBehaviour:
   mass: 20
   speedVelocity: {x: 0, y: 0, z: 0}
   myGroundCheck: {fileID: 2049052727}
-  jumpForce: 1
+  jumpForce: 0.3
   canJump: 0
   isJumping: 0
   isGrounded: 0
@@ -5256,7 +5260,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4724662382423136008, guid: 6062e6b0051e0e8459e61d2a47f67c27, type: 3}
       propertyPath: _FORCE
-      value: 1500
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724662382423136008, guid: 6062e6b0051e0e8459e61d2a47f67c27, type: 3}
+      propertyPath: maxTimeThrowing
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4724662382423136009, guid: 6062e6b0051e0e8459e61d2a47f67c27, type: 3}
       propertyPath: m_RootOrder
